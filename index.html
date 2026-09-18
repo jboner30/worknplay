@@ -1,1 +1,37 @@
-=
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Focus Timer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="timer-card" aria-label="Focus timer interface">
+        <p class="label">Focus Session</p>
+        <h1 id="timerDisplay" class="timer-display">25:00</h1>
+
+        <div class="settings-row" aria-label="Timer settings">
+          <label for="minutesInput" class="sr-only">Minutes</label>
+          <input id="minutesInput" type="number" min="1" max="120" value="25" />
+          <button id="setTimerBtn" class="secondary-btn" type="button">Set</button>
+        </div>
+
+        <div class="preset-row" aria-label="Quick timer presets">
+          <button class="preset-btn" type="button" data-minutes="15">15</button>
+          <button class="preset-btn active" type="button" data-minutes="25">25</button>
+          <button class="preset-btn" type="button" data-minutes="45">45</button>
+          <button class="preset-btn" type="button" data-minutes="60">60</button>
+        </div>
+
+        <div class="controls" aria-label="Timer controls">
+          <button id="startPauseBtn" class="primary-btn" type="button">Start</button>
+          <button id="resetBtn" class="secondary-btn" type="button">Reset</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="main.js"></script>
+  </body>
+</html>

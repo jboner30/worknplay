@@ -10,3 +10,6 @@ User prompt:
 
 User prompt:
 "Also, tell me whenever we meet a major milestone on the roadmap."
+
+User prompt:
+"This tool will need pop-ups enabled, as it will remind the user to take a break. For now, make a timer interface in the center of the page."
