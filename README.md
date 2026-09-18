@@ -2,4 +2,4 @@ This tool needs no sensitive data from the user. It requires the user to set a t
 The system is temporary; it functions as long as the user keeps it open.
 The system needs memory between sessions for certain functions (e.g. the weekly screen time tracker)
 No AI is needed. 
-No API calls are needed. 
+API calls may be needed to track the "Play" feature (aka the time spent on distracting websites)
