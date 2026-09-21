@@ -16,3 +16,6 @@ User prompt:
 
 User prompt:
 "I've found that it doesn't pop up if the user exits to a different window. Can you make it so that it will pop up even if the user exits to a different window?"
+
+User prompt:
+"So it didn't work. It only does it if the user goes back onto the tab, and not if the user is on a different tab."
