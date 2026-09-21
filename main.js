@@ -63,12 +63,43 @@ function toggleTimer() {
       stopTimer();
       isRunning = false;
       startPauseBtn.textContent = "Start";
-      window.alert("Time is up! Take a break and recharge.");
+      showBreakReminder();
       return;
     }
 
     updateDisplay();
   }, 1000);
+}
+
+function requestNotificationPermission() {
+  if (!("Notification" in window)) {
+    return false;
+  }
+
+  if (Notification.permission === "granted") {
+    return true;
+  }
+
+  if (Notification.permission === "default") {
+    Notification.requestPermission().then((permission) => permission === "granted");
+  }
+
+  return Notification.permission === "granted";
+}
+
+function showBreakReminder() {
+  if ("Notification" in window && Notification.permission === "granted") {
+    const notification = new Notification("Time is up!", {
+      body: "Take a break and recharge.",
+      tag: "focus-break-reminder",
+    });
+
+    if (notification) {
+      return;
+    }
+  }
+
+  window.alert("Time is up! Take a break and recharge.");
 }
 
 function resetTimer() {
@@ -79,7 +110,12 @@ function resetTimer() {
   updateDisplay();
 }
 
-startPauseBtn.addEventListener("click", toggleTimer);
+startPauseBtn.addEventListener("click", () => {
+  if (!isRunning) {
+    requestNotificationPermission();
+  }
+  toggleTimer();
+});
 resetBtn.addEventListener("click", resetTimer);
 
 setTimerBtn.addEventListener("click", () => {

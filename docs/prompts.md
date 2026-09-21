@@ -13,3 +13,6 @@ User prompt:
 
 User prompt:
 "This tool will need pop-ups enabled, as it will remind the user to take a break. For now, make a timer interface in the center of the page."
+
+User prompt:
+"I've found that it doesn't pop up if the user exits to a different window. Can you make it so that it will pop up even if the user exits to a different window?"
