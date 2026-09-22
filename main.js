@@ -50,8 +50,8 @@ function getReminderPopupMarkup() {
       </head>
       <body>
         <div class="panel">
-          <h1>Break time!</h1>
-          <p>Stand up, stretch, and take a short break.</p>
+          <h1>Popup ready.</h1>
+          <p>You can now close this window.</p>
         </div>
       </body>
     </html>

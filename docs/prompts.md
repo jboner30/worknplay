@@ -19,3 +19,6 @@ User prompt:
 
 User prompt:
 "So it didn't work. It only does it if the user goes back onto the tab, and not if the user is on a different tab."
+
+User prompt:
+"Instead of displaying the break message on the first pop-up, could it be a message that says: "Popup ready. You can now close this window.""
