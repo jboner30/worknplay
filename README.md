@@ -10,3 +10,4 @@ Break log:
 I pushed it past the simplest use case by letting the user go onto other sites and letting this run in the background. 
 9/21/26 Changed the popup from a site message into a popup that appears even when the user is on a different site. (869f8a27ee66096715a65a177b0a244d28ed79af) 
 I pushed this past the simplest use case by making an actual popup instead of a site message. 
+9/22/26 Made popup full screen for a bigger effect. (058beb8876282da332a017b44eaec62e8b48b0b3) This pushes it past its limits by forcing the user to look at it, since it is full screen. 
