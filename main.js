@@ -20,38 +20,63 @@ function getReminderPopupMarkup() {
         <meta charset="UTF-8" />
         <title>Break Time</title>
         <style>
-          body {
+          :root {
+            --screen-bg: #0f172a;
+            --overlay: rgba(15, 23, 42, 0.82);
+            --accent: #7dd3fc;
+            --text: #f8fafc;
+          }
+
+          * { box-sizing: border-box; }
+
+          html, body {
             margin: 0;
-            min-height: 100vh;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, var(--screen-bg), #1d4ed8);
+            color: var(--text);
+          }
+
+          body {
             display: grid;
             place-items: center;
-            background: linear-gradient(135deg, #0f172a, #1e3a8a);
-            color: white;
-            font-family: Arial, sans-serif;
+            padding: 40px;
+          }
+
+          .fullscreen-panel {
+            width: min(90vw, 920px);
+            min-height: min(70vh, 560px);
+            display: grid;
+            place-items: center;
             text-align: center;
+            padding: 48px;
+            border-radius: 28px;
+            background: var(--overlay);
+            border: 1px solid rgba(125, 211, 252, 0.3);
+            box-shadow: 0 30px 80px rgba(15, 23, 42, 0.5);
           }
-          .panel {
-            width: 320px;
-            padding: 24px;
-            border-radius: 18px;
-            background: rgba(15, 23, 42, 0.8);
-            box-shadow: 0 14px 32px rgba(0,0,0,0.3);
-          }
+
           h1 {
-            margin: 0 0 12px;
-            font-size: 2rem;
+            margin: 0 0 18px;
+            font-size: clamp(2.4rem, 5vw, 5rem);
+            line-height: 1.1;
+            color: var(--accent);
           }
+
           p {
             margin: 0;
+            font-size: clamp(1.15rem, 2vw, 2rem);
             line-height: 1.5;
-            font-size: 1rem;
           }
         </style>
       </head>
       <body>
-        <div class="panel">
-          <h1>Popup ready.</h1>
-          <p>You can now close this window.</p>
+        <div class="fullscreen-panel">
+          <div>
+            <h1>Popup ready.</h1>
+            <p>You can now close this window.</p>
+          </div>
         </div>
       </body>
     </html>
@@ -67,7 +92,7 @@ function openReminderPopup() {
   reminderPopup = window.open(
     "",
     "focus-break-reminder",
-    "width=380,height=220,resizable=no,scrollbars=no"
+    "fullscreen=yes,location=no,menubar=no,toolbar=no,status=no,resizable=yes,scrollbars=no"
   );
 
   if (!reminderPopup) {
