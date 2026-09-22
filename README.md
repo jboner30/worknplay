@@ -3,6 +3,7 @@ The system is temporary; it functions as long as the user keeps it open.
 The system needs memory between sessions for certain functions (e.g. the weekly screen time tracker)
 No AI is needed. 
 API calls may be needed to track the "Play" feature (aka the time spent on distracting websites)
+If the API fails, a message will notify the user of the problem and disable features that use it. 
 
 Break log:
-Changed the popup from a site message into a popup that appears even when the user is on a different site. 
+9/21/26 Changed the popup from a site message into a popup that appears even when the user is on a different site. (869f8a2) I pushed this past the simplest use case by making an actual popup instead of a site message. 
