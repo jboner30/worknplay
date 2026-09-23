@@ -12,13 +12,13 @@ let timerId = null;
 let isRunning = false;
 let reminderPopup = null;
 
-function getReminderPopupMarkup() {
+function getSetupPopupMarkup() {
   return `
     <!DOCTYPE html>
     <html>
       <head>
         <meta charset="UTF-8" />
-        <title>Break Time</title>
+        <title>Popup ready</title>
         <style>
           :root {
             --screen-bg: #0f172a;
@@ -83,6 +83,77 @@ function getReminderPopupMarkup() {
   `;
 }
 
+function getBreakPopupMarkup() {
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8" />
+        <title>Break time</title>
+        <style>
+          :root {
+            --screen-bg: #111827;
+            --overlay: rgba(17, 24, 39, 0.85);
+            --accent: #fbbf24;
+            --text: #f8fafc;
+          }
+
+          * { box-sizing: border-box; }
+
+          html, body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, var(--screen-bg), #b45309);
+            color: var(--text);
+          }
+
+          body {
+            display: grid;
+            place-items: center;
+            padding: 40px;
+          }
+
+          .fullscreen-panel {
+            width: min(90vw, 920px);
+            min-height: min(70vh, 560px);
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 48px;
+            border-radius: 28px;
+            background: var(--overlay);
+            border: 1px solid rgba(251, 191, 36, 0.35);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+          }
+
+          h1 {
+            margin: 0 0 18px;
+            font-size: clamp(2.4rem, 5vw, 5rem);
+            line-height: 1.1;
+            color: var(--accent);
+          }
+
+          p {
+            margin: 0;
+            font-size: clamp(1.15rem, 2vw, 2rem);
+            line-height: 1.5;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="fullscreen-panel">
+          <div>
+            <h1>Break time!</h1>
+            <p>Stand up, stretch, and take a short break.</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+}
+
 function openReminderPopup() {
   if (reminderPopup && !reminderPopup.closed) {
     reminderPopup.focus();
@@ -99,7 +170,29 @@ function openReminderPopup() {
     return false;
   }
 
-  reminderPopup.document.write(getReminderPopupMarkup());
+  reminderPopup.document.write(getBreakPopupMarkup());
+  reminderPopup.document.close();
+  reminderPopup.focus();
+  return true;
+}
+
+function openSetupPopup() {
+  if (reminderPopup && !reminderPopup.closed) {
+    reminderPopup.focus();
+    return true;
+  }
+
+  reminderPopup = window.open(
+    "",
+    "focus-break-test",
+    "fullscreen=yes,location=no,menubar=no,toolbar=no,status=no,resizable=yes,scrollbars=no"
+  );
+
+  if (!reminderPopup) {
+    return false;
+  }
+
+  reminderPopup.document.write(getSetupPopupMarkup());
   reminderPopup.document.close();
   reminderPopup.focus();
   return true;
@@ -220,7 +313,7 @@ startPauseBtn.addEventListener("click", () => {
 
 if (enableReminderPopupBtn) {
   enableReminderPopupBtn.addEventListener("click", () => {
-    openReminderPopup();
+    openSetupPopup();
     enableReminderPopupBtn.textContent = "Popup ready";
   });
 }
