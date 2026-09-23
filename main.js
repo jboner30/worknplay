@@ -128,6 +128,15 @@ function getBreakPopupMarkup() {
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
           }
 
+          .break-image {
+            display: block;
+            width: min(300px, 60vw);
+            max-width: 300px;
+            margin: 0 auto 24px;
+            border-radius: 18px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+          }
+
           h1 {
             margin: 0 0 18px;
             font-size: clamp(2.4rem, 5vw, 5rem);
@@ -145,6 +154,7 @@ function getBreakPopupMarkup() {
       <body>
         <div class="fullscreen-panel">
           <div>
+            <img class="break-image" src="process/screenshots/arduino!!.png" alt="Arduino board" />
             <h1>Break time!</h1>
             <p>Stand up, stretch, and take a short break.</p>
           </div>

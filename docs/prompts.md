@@ -22,3 +22,6 @@ User prompt:
 
 User prompt:
 "Instead of displaying the break message on the first pop-up, could it be a message that says: "Popup ready. You can now close this window.""
+
+User prompt:
+"can you implement arduino!!.png into the interface and break message"
