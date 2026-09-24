@@ -40,3 +40,9 @@ User prompt:
 
 User prompt:
 "good, however the sizing is very wrong and text is overlapping itself. just copy the image and set it as the popup"
+
+User prompt:
+"you didn't use the asset"
+
+User prompt:
+"also remember to update prompts.md with all prompts"

@@ -88,6 +88,8 @@ function getSetupPopupMarkup() {
 }
 
 function getBreakPopupMarkup() {
+  const arduinoAssetUrl = new URL("process/screenshots/arduino!!.png", window.location.href).toString();
+
   return `
     <!DOCTYPE html>
     <html>
@@ -222,7 +224,7 @@ function getBreakPopupMarkup() {
       </head>
       <body>
         <div class="top-row">
-          <img class="arduino-character" src="process/screenshots/arduino!!.png" alt="Arduino character" />
+          <img class="arduino-character" src="${arduinoAssetUrl}" alt="Arduino character" />
 
           <div class="speech-bubble">
             <p class="speech-text">Stop.<br />Are you doing okay?<br />Why don't you take a break?</p>
