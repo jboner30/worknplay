@@ -113,21 +113,22 @@ function getBreakPopupMarkup() {
           body {
             position: relative;
             overflow: hidden;
-            display: grid;
-            place-items: center;
+            margin: 0;
+            background: var(--bg);
           }
 
           .mockup {
             display: block;
-            width: min(96vw, 1600px);
-            height: auto;
-            object-fit: contain;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            object-position: center;
           }
 
           .continue-btn {
-            position: absolute;
+            position: fixed;
             left: 50%;
-            bottom: 7.5vh;
+            bottom: 7vh;
             transform: translateX(-50%);
             appearance: none;
             border: none;
@@ -135,10 +136,10 @@ function getBreakPopupMarkup() {
             background: rgba(0, 0, 0, 0.08);
             color: var(--button-text);
             font-family: "Quicksand", "Segoe UI", sans-serif;
-            font-size: clamp(2.5rem, 3vw, 6rem);
+            font-size: clamp(2.5rem, 3vw, 5rem);
             line-height: 1;
             letter-spacing: -0.08em;
-            min-width: min(58vw, 700px);
+            min-width: min(56vw, 680px);
             min-height: 110px;
             padding: 18px 28px;
             cursor: pointer;

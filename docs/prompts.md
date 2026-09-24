@@ -37,3 +37,6 @@ User prompt:
 
 User prompt:
 "just change the popup to fully match the reference, and we'll go from there."
+
+User prompt:
+"good, however the sizing is very wrong and text is overlapping itself. just copy the image and set it as the popup"
