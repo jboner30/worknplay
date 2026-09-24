@@ -136,82 +136,13 @@ function getBreakPopupMarkup() {
             margin-top: 16px;
           }
 
-          .penguin {
-            position: relative;
+          .arduino-character {
+            display: block;
             width: 260px;
-            height: 230px;
+            height: auto;
             flex-shrink: 0;
+            object-fit: contain;
           }
-
-          .penguin-body {
-            position: absolute;
-            left: 26px;
-            top: 50px;
-            width: 190px;
-            height: 150px;
-            background: var(--penguin-teal);
-            border: 5px solid var(--penguin-dark);
-            border-radius: 50% 50% 46% 46%;
-          }
-
-          .penguin-head {
-            position: absolute;
-            left: 52px;
-            top: 0;
-            width: 138px;
-            height: 116px;
-            background: var(--penguin-teal);
-            border: 5px solid var(--penguin-dark);
-            border-radius: 50%;
-          }
-
-          .penguin-eye {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: var(--penguin-dark);
-            border-radius: 50%;
-            top: 52px;
-          }
-
-          .penguin-eye.left { left: 88px; }
-          .penguin-eye.right { right: 80px; }
-
-          .penguin-beak {
-            position: absolute;
-            left: 118px;
-            top: 70px;
-            width: 28px;
-            height: 18px;
-            background: var(--penguin-red);
-            clip-path: polygon(0 0, 100% 50%, 0 100%);
-            border-radius: 3px;
-            transform: rotate(5deg);
-          }
-
-          .penguin-wing {
-            position: absolute;
-            left: 24px;
-            top: 88px;
-            width: 52px;
-            height: 82px;
-            background: rgba(0, 0, 0, 0.12);
-            border-radius: 48% 48% 42% 42%;
-            transform: rotate(-18deg);
-          }
-
-          .penguin-foot {
-            position: absolute;
-            width: 34px;
-            height: 18px;
-            background: var(--penguin-yellow);
-            border: 4px solid var(--penguin-dark);
-            border-radius: 18px;
-            bottom: 8px;
-          }
-
-          .penguin-foot.left { left: 96px; }
-          .penguin-foot.right { left: 138px; }
 
           .speech-bubble {
             width: min(70vw, 920px);
@@ -291,16 +222,7 @@ function getBreakPopupMarkup() {
       </head>
       <body>
         <div class="top-row">
-          <div class="penguin" aria-hidden="true">
-            <div class="penguin-head"></div>
-            <div class="penguin-eye left"></div>
-            <div class="penguin-eye right"></div>
-            <div class="penguin-beak"></div>
-            <div class="penguin-body"></div>
-            <div class="penguin-wing"></div>
-            <div class="penguin-foot left"></div>
-            <div class="penguin-foot right"></div>
-          </div>
+          <img class="arduino-character" src="process/screenshots/arduino!!.png" alt="Arduino character" />
 
           <div class="speech-bubble">
             <p class="speech-text">Stop.<br />Are you doing okay?<br />Why don't you take a break?</p>
