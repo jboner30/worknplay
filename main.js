@@ -148,6 +148,26 @@ function getBreakPopupMarkup() {
             line-height: 1.5;
             color: var(--text);
           }
+
+          .continue-btn {
+            appearance: none;
+            border: none;
+            border-radius: 16px;
+            background: var(--panel-alt);
+            color: var(--text);
+            font: inherit;
+            font-size: clamp(1.4rem, 2.6vw, 3rem);
+            line-height: 1;
+            padding: 18px 28px;
+            min-width: min(52vw, 500px);
+            margin-top: 32px;
+            cursor: pointer;
+          }
+
+          .continue-btn:disabled {
+            opacity: 0.9;
+            cursor: not-allowed;
+          }
         </style>
       </head>
       <body>
@@ -155,11 +175,9 @@ function getBreakPopupMarkup() {
           <div>
             <h1>Popup ready.</h1>
             <p>You can now close this window.</p>
+            <button id="continueBtn" class="continue-btn" type="button" disabled>Continue (30)</button>
           </div>
         </div>
-      </body>
-    </html>
-  `;
 
         <script>
           let remaining = 30;
@@ -222,8 +240,8 @@ function openReminderPopup() {
 
 function openSetupPopup() {
   if (reminderPopup && !reminderPopup.closed) {
-    reminderPopup.focus();
-    return true;
+    reminderPopup.close();
+    reminderPopup = null;
   }
 
   reminderPopup = window.open(

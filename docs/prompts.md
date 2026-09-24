@@ -58,3 +58,6 @@ User prompt:
 
 User prompt:
 "let's just start fresh. revert the popup to what the it was originally; no arduino"
+
+User prompt:
+"it's still showing the old window for some reason"
