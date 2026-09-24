@@ -34,3 +34,6 @@ User prompt:
 
 User prompt:
 "so the penguin is supposed to say the words, and it should be in quicksand font"
+
+User prompt:
+"just change the popup to fully match the reference, and we'll go from there."

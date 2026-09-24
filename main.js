@@ -96,11 +96,10 @@ function getBreakPopupMarkup() {
         <title>Break time</title>
         <style>
           :root {
-            --bg: #f5f5f5;
-            --panel: #f0f0f0;
-            --panel-strong: #d9d9d9;
+            --bg: #f4f4f4;
+            --panel: #d9d9d9;
+            --panel-strong: #d2d2d2;
             --text: #111111;
-            --outline: #1f1f1f;
             --button-text: #111111;
           }
 
@@ -120,59 +119,44 @@ function getBreakPopupMarkup() {
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            padding: 28px 32px 40px;
+            padding: 42px 40px 56px;
             overflow: hidden;
           }
 
           .break-row {
-            width: 100%;
-            max-width: 1240px;
+            width: min(100%, 1200px);
             display: flex;
             align-items: center;
             justify-content: flex-start;
             gap: 28px;
             margin-top: 20px;
+            margin-left: 8px;
           }
 
           .break-image {
-            width: 190px;
+            width: clamp(170px, 14vw, 250px);
             height: auto;
             display: block;
-            filter: drop-shadow(0 4px 0 rgba(0,0,0,0.05));
+            filter: none;
           }
 
           .speech-bubble {
-            position: relative;
-            width: min(100%, 760px);
-            min-height: 190px;
+            width: min(100%, 820px);
+            min-height: 230px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 28px 34px;
-            border-radius: 28px;
-            background: var(--panel-strong);
-            border: 3px solid rgba(0, 0, 0, 0.15);
+            padding: 28px 32px;
+            border-radius: 30px;
+            background: rgba(0, 0, 0, 0.08);
             box-sizing: border-box;
             font-family: "Quicksand", "Segoe UI", sans-serif;
-            font-size: clamp(2.5rem, 4vw, 5rem);
-            line-height: 1.1;
-            letter-spacing: -0.06em;
+            font-size: clamp(3.4rem, 4.4vw, 7rem);
+            line-height: 1.04;
+            letter-spacing: -0.08em;
             color: var(--text);
             text-align: left;
             font-weight: 500;
-          }
-
-          .speech-bubble::after {
-            content: "";
-            position: absolute;
-            left: -16px;
-            top: 70px;
-            width: 24px;
-            height: 24px;
-            background: var(--panel-strong);
-            border-left: 3px solid rgba(0, 0, 0, 0.15);
-            border-bottom: 3px solid rgba(0, 0, 0, 0.15);
-            transform: rotate(45deg);
           }
 
           .message {
@@ -180,13 +164,13 @@ function getBreakPopupMarkup() {
             max-width: 1200px;
             display: flex;
             justify-content: center;
-            margin-top: 22px;
+            margin-top: 26px;
           }
 
           .deep-breath {
             margin: 0;
-            font-size: clamp(4.5rem, 7vw, 10rem);
-            line-height: 0.98;
+            font-size: clamp(5.4rem, 10vw, 17rem);
+            line-height: 0.9;
             letter-spacing: -0.08em;
             text-align: center;
             font-weight: 500;
@@ -197,21 +181,21 @@ function getBreakPopupMarkup() {
             width: 100%;
             display: flex;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 34px;
           }
 
           .continue-btn {
             appearance: none;
             border: none;
-            border-radius: 18px;
-            background: var(--panel-strong);
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.08);
             color: var(--button-text);
             font-family: "Quicksand", "Segoe UI", sans-serif;
-            font-size: clamp(2rem, 3vw, 4rem);
+            font-size: clamp(3rem, 4vw, 7rem);
             line-height: 1;
-            letter-spacing: -0.06em;
-            min-width: min(72vw, 700px);
-            min-height: 90px;
+            letter-spacing: -0.08em;
+            min-width: min(58vw, 750px);
+            min-height: 110px;
             padding: 18px 28px;
             cursor: pointer;
             box-shadow: none;
@@ -219,7 +203,7 @@ function getBreakPopupMarkup() {
           }
 
           .continue-btn:disabled {
-            opacity: 0.9;
+            opacity: 0.95;
             cursor: not-allowed;
           }
 
