@@ -97,12 +97,11 @@ function getBreakPopupMarkup() {
         <style>
           :root {
             --bg: #f5f5f5;
-            --panel: #ffffff;
-            --panel-alt: #f8f8f8;
-            --border: #e5e5e5;
+            --panel: #f0f0f0;
+            --panel-strong: #d9d9d9;
             --text: #111111;
-            --muted: #666666;
-            --accent: #2f6fed;
+            --outline: #1f1f1f;
+            --button-text: #111111;
           }
 
           * { box-sizing: border-box; }
@@ -117,92 +116,162 @@ function getBreakPopupMarkup() {
           }
 
           body {
-            display: grid;
-            place-items: center;
-            padding: 40px;
-          }
-
-          .fullscreen-panel {
-            width: min(90vw, 920px);
-            min-height: min(70vh, 560px);
-            display: grid;
-            place-items: center;
-            text-align: center;
-            padding: 48px;
-            border-radius: 28px;
-            background: var(--panel);
-            border: 1px solid var(--border);
-            box-shadow: 0 18px 36px rgba(17, 17, 17, 0.08);
-          }
-
-          .arduino-wrap {
             display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 28px 32px 40px;
+            overflow: hidden;
           }
 
-          .arduino-image {
-            display: block;
-            width: 140px;
+          .break-row {
+            width: 100%;
+            max-width: 1240px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 28px;
+            margin-top: 20px;
+          }
+
+          .break-image {
+            width: 190px;
             height: auto;
-            border-radius: 16px;
-            background: var(--panel-alt);
-            border: 1px solid var(--border);
+            display: block;
+            filter: drop-shadow(0 4px 0 rgba(0,0,0,0.05));
           }
 
           .speech-bubble {
             position: relative;
-            background: var(--panel-alt);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 0.8rem 1rem;
-            max-width: 290px;
+            width: min(100%, 760px);
+            min-height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 28px 34px;
+            border-radius: 28px;
+            background: var(--panel-strong);
+            border: 3px solid rgba(0, 0, 0, 0.15);
+            box-sizing: border-box;
+            font-size: clamp(2.5rem, 4vw, 5rem);
+            line-height: 1.1;
+            letter-spacing: -0.06em;
             color: var(--text);
-            font-size: clamp(1rem, 1.6vw, 1.5rem);
-            line-height: 1.4;
+            text-align: left;
+            font-weight: 500;
           }
 
           .speech-bubble::after {
             content: "";
             position: absolute;
-            left: -8px;
-            bottom: 18px;
-            width: 16px;
-            height: 16px;
-            background: var(--panel-alt);
-            border-left: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
+            left: -16px;
+            top: 70px;
+            width: 24px;
+            height: 24px;
+            background: var(--panel-strong);
+            border-left: 3px solid rgba(0, 0, 0, 0.15);
+            border-bottom: 3px solid rgba(0, 0, 0, 0.15);
             transform: rotate(45deg);
           }
 
-          h1 {
-            margin: 0 0 18px;
-            font-size: clamp(2.4rem, 5vw, 5rem);
-            line-height: 1.1;
-            color: var(--accent);
+          .message {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: center;
+            margin-top: 22px;
           }
 
-          p {
+          .deep-breath {
             margin: 0;
-            font-size: clamp(1.15rem, 2vw, 2rem);
-            line-height: 1.5;
-            color: var(--text);
+            font-size: clamp(4.5rem, 7vw, 10rem);
+            line-height: 0.98;
+            letter-spacing: -0.08em;
+            text-align: center;
+            font-weight: 500;
+          }
+
+          .continue-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+          }
+
+          .continue-btn {
+            appearance: none;
+            border: none;
+            border-radius: 18px;
+            background: var(--panel-strong);
+            color: var(--button-text);
+            font: inherit;
+            font-size: clamp(2rem, 3vw, 4rem);
+            line-height: 1;
+            letter-spacing: -0.06em;
+            min-width: min(72vw, 700px);
+            min-height: 90px;
+            padding: 18px 28px;
+            cursor: pointer;
+            box-shadow: none;
+            transition: opacity 0.2s ease;
+          }
+
+          .continue-btn:disabled {
+            opacity: 0.9;
+            cursor: not-allowed;
+          }
+
+          .continue-btn:not(:disabled):hover {
+            filter: brightness(0.98);
           }
         </style>
       </head>
       <body>
-        <div class="fullscreen-panel">
-          <div>
-            <div class="arduino-wrap">
-              <img class="arduino-image" src="process/screenshots/arduino!!.png" alt="Arduino board" />
-              <div class="speech-bubble">Break time! Please step away for a moment.</div>
-            </div>
-            <h1>Break time!</h1>
-            <p>Stand up, stretch, and take a short break.</p>
-          </div>
+        <div class="break-row">
+          <img class="break-image" src="process/screenshots/Tool Build (atmosphere) (1).png" alt="Tool Build character" />
+          <div class="speech-bubble">Stop.<br />Are you doing okay?<br />Why don't you take a break?</div>
         </div>
+
+        <div class="message">
+          <h1 class="deep-breath">Take a deep breath.</h1>
+        </div>
+
+        <div class="continue-wrap">
+          <button id="continueBtn" class="continue-btn" type="button" disabled>Continue (30)</button>
+        </div>
+
+        <script>
+          let remaining = 30;
+          const continueBtn = document.getElementById('continueBtn');
+          const timer = setInterval(() => {
+            remaining -= 1;
+
+            if (remaining <= 0) {
+              clearInterval(timer);
+              continueBtn.disabled = false;
+              continueBtn.textContent = 'Continue';
+              return;
+            }
+
+            continueBtn.textContent = 'Continue (' + remaining + ')';
+          }, 1000);
+
+          continueBtn.addEventListener('click', () => {
+            if (continueBtn.disabled) return;
+            if (window.opener && !window.opener.closed) {
+              window.opener.focus();
+            }
+            window.close();
+          });
+
+          window.addEventListener('beforeunload', (event) => {
+            if (continueBtn.disabled) {
+              event.preventDefault();
+              event.returnValue = '';
+              return '';
+            }
+          });
+        </script>
       </body>
     </html>
   `;

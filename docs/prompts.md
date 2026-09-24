@@ -28,3 +28,6 @@ User prompt:
 
 User prompt:
 "can you make the background white minimalist? also make it so it looks like arduino is "speaking" with a text box"
+
+User prompt:
+"can you make the popup look more like the Tool Build (atmosphere)(1).png? However, when continue button is pressed, it should close the popup and navigate back to the webpage. Also, if you could make the popup unable to be closed until that timer is up, that'd be great. If that is the case, then the continue button should be the only way to exit the popup."
