@@ -49,3 +49,6 @@ User prompt:
 
 User prompt:
 "it's still not using the file"
+
+User prompt:
+"please just replace the attempt to recreate the image with the actual image. PLEASE."

@@ -98,115 +98,46 @@ function getBreakPopupMarkup() {
         <meta charset="UTF-8" />
         <title>Break time</title>
         <style>
-          :root {
-            --bg: #f4f4f4;
-            --bubble: rgba(0, 0, 0, 0.08);
-            --text: #111111;
-            --button-text: #111111;
-            --penguin-teal: #1f7d8f;
-            --penguin-dark: #0d3d53;
-            --penguin-yellow: #f6d63f;
-            --penguin-red: #e74444;
-          }
-
           * { box-sizing: border-box; }
 
           html, body {
             margin: 0;
             width: 100%;
             height: 100%;
-            background: var(--bg);
+            background: #f4f4f4;
             font-family: "Quicksand", "Segoe UI", sans-serif;
-            color: var(--text);
           }
 
           body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 36px 44px 60px;
+            position: relative;
             overflow: hidden;
+            background: #f4f4f4;
           }
 
-          .top-row {
-            width: 100%;
-            max-width: 1500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3vw;
-            margin-top: 16px;
-          }
-
-          .arduino-character {
+          .mockup {
             display: block;
-            width: 260px;
-            height: auto;
-            flex-shrink: 0;
-            object-fit: contain;
-          }
-
-          .speech-bubble {
-            width: min(70vw, 920px);
-            min-height: 220px;
-            background: var(--bubble);
-            border-radius: 34px;
-            padding: 22px 28px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: left;
-          }
-
-          .speech-text {
-            margin: 0;
-            font-size: clamp(2.7rem, 4vw, 6rem);
-            line-height: 1.04;
-            letter-spacing: -0.08em;
-            font-weight: 500;
-            color: var(--text);
-            white-space: normal;
-          }
-
-          .headline-wrap {
-            width: 100%;
-            max-width: 1540px;
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-          }
-
-          .headline {
-            margin: 0;
-            font-size: clamp(6rem, 10vw, 18rem);
-            line-height: 0.82;
-            letter-spacing: -0.08em;
-            font-weight: 500;
-            color: var(--text);
-            text-align: center;
-            white-space: nowrap;
-          }
-
-          .continue-wrap {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-top: 18px;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            object-position: center;
           }
 
           .continue-btn {
+            position: fixed;
+            left: 50%;
+            bottom: 7vh;
+            transform: translateX(-50%);
             appearance: none;
             border: none;
             border-radius: 20px;
             background: rgba(0, 0, 0, 0.08);
-            color: var(--button-text);
+            color: #111111;
             font-family: "Quicksand", "Segoe UI", sans-serif;
-            font-size: clamp(2.2rem, 3vw, 5.5rem);
+            font-size: clamp(2.5rem, 3vw, 5rem);
             line-height: 1;
             letter-spacing: -0.08em;
-            min-width: min(60vw, 820px);
-            min-height: 86px;
+            min-width: min(56vw, 680px);
+            min-height: 110px;
             padding: 18px 28px;
             cursor: pointer;
             box-shadow: none;
@@ -224,21 +155,8 @@ function getBreakPopupMarkup() {
         </style>
       </head>
       <body>
-        <div class="top-row">
-          <img class="arduino-character" src="${arduinoAssetUrl}" alt="Arduino character" />
-
-          <div class="speech-bubble">
-            <p class="speech-text">Stop.<br />Are you doing okay?<br />Why don't you take a break?</p>
-          </div>
-        </div>
-
-        <div class="headline-wrap">
-          <h1 class="headline">Take a deep breath.</h1>
-        </div>
-
-        <div class="continue-wrap">
-          <button id="continueBtn" class="continue-btn" type="button" disabled>Continue (30)</button>
-        </div>
+        <img class="mockup" src="${arduinoAssetUrl}" alt="Break reminder mockup" />
+        <button id="continueBtn" class="continue-btn" type="button" disabled>Continue (30)</button>
 
         <script>
           let remaining = 30;
