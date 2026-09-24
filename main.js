@@ -21,10 +21,13 @@ function getSetupPopupMarkup() {
         <title>Popup ready</title>
         <style>
           :root {
-            --screen-bg: #0f172a;
-            --overlay: rgba(15, 23, 42, 0.82);
-            --accent: #7dd3fc;
-            --text: #f8fafc;
+            --bg: #f5f5f5;
+            --panel: #ffffff;
+            --panel-alt: #f8f8f8;
+            --border: #e5e5e5;
+            --text: #111111;
+            --muted: #666666;
+            --accent: #2f6fed;
           }
 
           * { box-sizing: border-box; }
@@ -33,8 +36,8 @@ function getSetupPopupMarkup() {
             margin: 0;
             width: 100%;
             height: 100%;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, var(--screen-bg), #1d4ed8);
+            font-family: "Quicksand", "Segoe UI", sans-serif;
+            background: var(--bg);
             color: var(--text);
           }
 
@@ -52,9 +55,9 @@ function getSetupPopupMarkup() {
             text-align: center;
             padding: 48px;
             border-radius: 28px;
-            background: var(--overlay);
-            border: 1px solid rgba(125, 211, 252, 0.3);
-            box-shadow: 0 30px 80px rgba(15, 23, 42, 0.5);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            box-shadow: 0 18px 36px rgba(17, 17, 17, 0.08);
           }
 
           h1 {
@@ -68,6 +71,7 @@ function getSetupPopupMarkup() {
             margin: 0;
             font-size: clamp(1.15rem, 2vw, 2rem);
             line-height: 1.5;
+            color: var(--text);
           }
         </style>
       </head>
@@ -92,10 +96,13 @@ function getBreakPopupMarkup() {
         <title>Break time</title>
         <style>
           :root {
-            --screen-bg: #111827;
-            --overlay: rgba(17, 24, 39, 0.85);
-            --accent: #fbbf24;
-            --text: #f8fafc;
+            --bg: #f5f5f5;
+            --panel: #ffffff;
+            --panel-alt: #f8f8f8;
+            --border: #e5e5e5;
+            --text: #111111;
+            --muted: #666666;
+            --accent: #2f6fed;
           }
 
           * { box-sizing: border-box; }
@@ -104,8 +111,8 @@ function getBreakPopupMarkup() {
             margin: 0;
             width: 100%;
             height: 100%;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, var(--screen-bg), #b45309);
+            font-family: "Quicksand", "Segoe UI", sans-serif;
+            background: var(--bg);
             color: var(--text);
           }
 
@@ -123,18 +130,51 @@ function getBreakPopupMarkup() {
             text-align: center;
             padding: 48px;
             border-radius: 28px;
-            background: var(--overlay);
-            border: 1px solid rgba(251, 191, 36, 0.35);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            box-shadow: 0 18px 36px rgba(17, 17, 17, 0.08);
           }
 
-          .break-image {
+          .arduino-wrap {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+          }
+
+          .arduino-image {
             display: block;
-            width: min(300px, 60vw);
-            max-width: 300px;
-            margin: 0 auto 24px;
+            width: 140px;
+            height: auto;
+            border-radius: 16px;
+            background: var(--panel-alt);
+            border: 1px solid var(--border);
+          }
+
+          .speech-bubble {
+            position: relative;
+            background: var(--panel-alt);
+            border: 1px solid var(--border);
             border-radius: 18px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            padding: 0.8rem 1rem;
+            max-width: 290px;
+            color: var(--text);
+            font-size: clamp(1rem, 1.6vw, 1.5rem);
+            line-height: 1.4;
+          }
+
+          .speech-bubble::after {
+            content: "";
+            position: absolute;
+            left: -8px;
+            bottom: 18px;
+            width: 16px;
+            height: 16px;
+            background: var(--panel-alt);
+            border-left: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            transform: rotate(45deg);
           }
 
           h1 {
@@ -148,13 +188,17 @@ function getBreakPopupMarkup() {
             margin: 0;
             font-size: clamp(1.15rem, 2vw, 2rem);
             line-height: 1.5;
+            color: var(--text);
           }
         </style>
       </head>
       <body>
         <div class="fullscreen-panel">
           <div>
-            <img class="break-image" src="process/screenshots/arduino!!.png" alt="Arduino board" />
+            <div class="arduino-wrap">
+              <img class="arduino-image" src="process/screenshots/arduino!!.png" alt="Arduino board" />
+              <div class="speech-bubble">Break time! Please step away for a moment.</div>
+            </div>
             <h1>Break time!</h1>
             <p>Stand up, stretch, and take a short break.</p>
           </div>
