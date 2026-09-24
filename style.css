@@ -1,14 +1,13 @@
 :root {
-  --bg-start: #101828;
-  --bg-end: #1f3b5b;
-  --card-bg: rgba(15, 23, 42, 0.72);
-  --card-border: rgba(148, 163, 184, 0.25);
-  --text-primary: #e2e8f0;
-  --text-secondary: #cbd5e1;
-  --accent: #7dd3fc;
-  --accent-strong: #38bdf8;
-  --button-dark: rgba(15, 23, 42, 0.9);
-  --shadow: rgba(15, 23, 42, 0.42);
+  --bg: #f5f5f5;
+  --panel: #ffffff;
+  --panel-alt: #f8f8f8;
+  --border: #e5e5e5;
+  --text: #111111;
+  --muted: #666666;
+  --accent: #2f6fed;
+  --accent-soft: #edf4ff;
+  --shadow: rgba(17, 17, 17, 0.08);
 }
 
 * {
@@ -20,8 +19,8 @@ html, body {
   min-height: 100%;
   height: 100%;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
-  color: var(--text-primary);
+  background: var(--bg);
+  color: var(--text);
 }
 
 body {
@@ -30,26 +29,57 @@ body {
 }
 
 .app-shell {
-  width: min(92vw, 520px);
+  width: min(92vw, 560px);
 }
 
 .timer-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 24px;
-  box-shadow: 0 24px 55px var(--shadow);
-  padding: 2.25rem 2rem 1.75rem;
-  backdrop-filter: blur(8px);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: 0 18px 36px var(--shadow);
+  padding: 2rem 1.5rem 1.5rem;
+}
+
+.arduino-wrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 .arduino-image {
   display: block;
-  width: min(180px, 52%);
-  max-width: 180px;
-  margin: 0 auto 1rem;
+  width: 120px;
+  height: auto;
   border-radius: 16px;
-  background: rgba(15, 23, 42, 0.4);
-  box-shadow: 0 14px 26px rgba(15, 23, 42, 0.3);
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+}
+
+.speech-bubble {
+  position: relative;
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 0.7rem 0.9rem;
+  max-width: 220px;
+  color: var(--text);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  left: -8px;
+  bottom: 18px;
+  width: 16px;
+  height: 16px;
+  background: var(--panel-alt);
+  border-left: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  transform: rotate(45deg);
 }
 
 .label {
@@ -58,7 +88,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-size: 0.72rem;
-  color: var(--text-secondary);
+  color: var(--muted);
 }
 
 .timer-display {
@@ -84,11 +114,11 @@ body {
 
 input {
   width: 120px;
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 0.8rem 0.9rem;
-  color: var(--text-primary);
+  color: var(--text);
   font-size: 1rem;
   text-align: center;
 }
@@ -112,15 +142,15 @@ button:active {
 }
 
 .primary-btn {
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-  color: #082f49;
-  box-shadow: 0 12px 22px rgba(56, 189, 248, 0.28);
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 12px 22px rgba(47, 111, 237, 0.2);
 }
 
 .secondary-btn {
-  background: rgba(15, 23, 42, 0.9);
-  color: var(--text-primary);
-  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: var(--panel-alt);
+  color: var(--text);
+  border: 1px solid var(--border);
 }
 
 .preset-row {
@@ -129,15 +159,15 @@ button:active {
 }
 
 .preset-btn {
-  background: rgba(148, 163, 184, 0.12);
-  color: var(--text-primary);
-  border: 1px solid rgba(148, 163, 184, 0.15);
+  background: var(--panel-alt);
+  color: var(--text);
+  border: 1px solid var(--border);
   min-width: 62px;
 }
 
 .preset-btn.active {
-  background: rgba(125, 211, 252, 0.18);
-  border-color: rgba(125, 211, 252, 0.4);
+  background: var(--accent-soft);
+  border-color: rgba(47, 111, 237, 0.2);
   color: var(--accent);
 }
 
@@ -160,6 +190,14 @@ button:active {
 @media (max-width: 480px) {
   .timer-card {
     padding: 1.6rem 1.25rem 1.3rem;
+  }
+
+  .arduino-wrap {
+    flex-direction: column;
+  }
+
+  .speech-bubble {
+    max-width: 260px;
   }
 
   .settings-row {

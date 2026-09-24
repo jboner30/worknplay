@@ -25,3 +25,6 @@ User prompt:
 
 User prompt:
 "can you implement arduino!!.png into the interface and break message"
+
+User prompt:
+"can you make the background white minimalist? also make it so it looks like arduino is "speaking" with a text box"
