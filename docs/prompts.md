@@ -52,3 +52,9 @@ User prompt:
 
 User prompt:
 "please just replace the attempt to recreate the image with the actual image. PLEASE."
+
+User prompt:
+"i did that and it still doesn't work."
+
+User prompt:
+"let's just start fresh. revert the popup to what the it was originally; no arduino"

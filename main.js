@@ -88,9 +88,6 @@ function getSetupPopupMarkup() {
 }
 
 function getBreakPopupMarkup() {
-  const appBaseUrl = new URL("./", window.location.href).toString();
-  const arduinoAssetUrl = new URL("process/screenshots/arduino!!.png", appBaseUrl).toString();
-
   return `
     <!DOCTYPE html>
     <html>
@@ -98,65 +95,71 @@ function getBreakPopupMarkup() {
         <meta charset="UTF-8" />
         <title>Break time</title>
         <style>
+          :root {
+            --bg: #f5f5f5;
+            --panel: #ffffff;
+            --panel-alt: #f8f8f8;
+            --border: #e5e5e5;
+            --text: #111111;
+            --muted: #666666;
+            --accent: #2f6fed;
+          }
+
           * { box-sizing: border-box; }
 
           html, body {
             margin: 0;
             width: 100%;
             height: 100%;
-            background: #f4f4f4;
             font-family: "Quicksand", "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
           }
 
           body {
-            position: relative;
-            overflow: hidden;
-            background: #f4f4f4;
+            display: grid;
+            place-items: center;
+            padding: 40px;
           }
 
-          .mockup {
-            display: block;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            object-position: center;
+          .fullscreen-panel {
+            width: min(90vw, 920px);
+            min-height: min(70vh, 560px);
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 48px;
+            border-radius: 28px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            box-shadow: 0 18px 36px rgba(17, 17, 17, 0.08);
           }
 
-          .continue-btn {
-            position: fixed;
-            left: 50%;
-            bottom: 7vh;
-            transform: translateX(-50%);
-            appearance: none;
-            border: none;
-            border-radius: 20px;
-            background: rgba(0, 0, 0, 0.08);
-            color: #111111;
-            font-family: "Quicksand", "Segoe UI", sans-serif;
-            font-size: clamp(2.5rem, 3vw, 5rem);
-            line-height: 1;
-            letter-spacing: -0.08em;
-            min-width: min(56vw, 680px);
-            min-height: 110px;
-            padding: 18px 28px;
-            cursor: pointer;
-            box-shadow: none;
-            transition: opacity 0.2s ease;
+          h1 {
+            margin: 0 0 18px;
+            font-size: clamp(2.4rem, 5vw, 5rem);
+            line-height: 1.1;
+            color: var(--accent);
           }
 
-          .continue-btn:disabled {
-            opacity: 0.95;
-            cursor: not-allowed;
-          }
-
-          .continue-btn:not(:disabled):hover {
-            filter: brightness(0.98);
+          p {
+            margin: 0;
+            font-size: clamp(1.15rem, 2vw, 2rem);
+            line-height: 1.5;
+            color: var(--text);
           }
         </style>
       </head>
       <body>
-        <img class="mockup" src="${arduinoAssetUrl}" alt="Break reminder mockup" />
-        <button id="continueBtn" class="continue-btn" type="button" disabled>Continue (30)</button>
+        <div class="fullscreen-panel">
+          <div>
+            <h1>Popup ready.</h1>
+            <p>You can now close this window.</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
 
         <script>
           let remaining = 30;
@@ -197,8 +200,8 @@ function getBreakPopupMarkup() {
 
 function openReminderPopup() {
   if (reminderPopup && !reminderPopup.closed) {
-    reminderPopup.focus();
-    return true;
+    reminderPopup.close();
+    reminderPopup = null;
   }
 
   reminderPopup = window.open(
