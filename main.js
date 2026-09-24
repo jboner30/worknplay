@@ -97,9 +97,6 @@ function getBreakPopupMarkup() {
         <style>
           :root {
             --bg: #f4f4f4;
-            --panel: #d9d9d9;
-            --panel-strong: #d2d2d2;
-            --text: #111111;
             --button-text: #111111;
           }
 
@@ -109,92 +106,39 @@ function getBreakPopupMarkup() {
             margin: 0;
             width: 100%;
             height: 100%;
-            font-family: "Quicksand", "Segoe UI", sans-serif;
             background: var(--bg);
-            color: var(--text);
+            font-family: "Quicksand", "Segoe UI", sans-serif;
           }
 
           body {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 42px 40px 56px;
+            position: relative;
             overflow: hidden;
+            display: grid;
+            place-items: center;
           }
 
-          .break-row {
-            width: min(100%, 1200px);
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 28px;
-            margin-top: 20px;
-            margin-left: 8px;
-          }
-
-          .break-image {
-            width: clamp(170px, 14vw, 250px);
-            height: auto;
+          .mockup {
             display: block;
-            filter: none;
-          }
-
-          .speech-bubble {
-            width: min(100%, 820px);
-            min-height: 230px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 28px 32px;
-            border-radius: 30px;
-            background: rgba(0, 0, 0, 0.08);
-            box-sizing: border-box;
-            font-family: "Quicksand", "Segoe UI", sans-serif;
-            font-size: clamp(3.4rem, 4.4vw, 7rem);
-            line-height: 1.04;
-            letter-spacing: -0.08em;
-            color: var(--text);
-            text-align: left;
-            font-weight: 500;
-          }
-
-          .message {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: center;
-            margin-top: 26px;
-          }
-
-          .deep-breath {
-            margin: 0;
-            font-size: clamp(5.4rem, 10vw, 17rem);
-            line-height: 0.9;
-            letter-spacing: -0.08em;
-            text-align: center;
-            font-weight: 500;
-            font-family: "Quicksand", "Segoe UI", sans-serif;
-          }
-
-          .continue-wrap {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-top: 34px;
+            width: min(96vw, 1600px);
+            height: auto;
+            object-fit: contain;
           }
 
           .continue-btn {
+            position: absolute;
+            left: 50%;
+            bottom: 7.5vh;
+            transform: translateX(-50%);
             appearance: none;
             border: none;
             border-radius: 20px;
             background: rgba(0, 0, 0, 0.08);
             color: var(--button-text);
             font-family: "Quicksand", "Segoe UI", sans-serif;
-            font-size: clamp(3rem, 4vw, 7rem);
+            font-size: clamp(2.5rem, 3vw, 6rem);
             line-height: 1;
             letter-spacing: -0.08em;
-            min-width: min(58vw, 750px);
+            min-width: min(58vw, 700px);
             min-height: 110px;
             padding: 18px 28px;
             cursor: pointer;
@@ -213,18 +157,8 @@ function getBreakPopupMarkup() {
         </style>
       </head>
       <body>
-        <div class="break-row">
-          <img class="break-image" src="process/screenshots/Tool Build (atmosphere) (1).png" alt="Tool Build character" />
-          <div class="speech-bubble">Stop.<br />Are you doing okay?<br />Why don't you take a break?</div>
-        </div>
-
-        <div class="message">
-          <h1 class="deep-breath">Take a deep breath.</h1>
-        </div>
-
-        <div class="continue-wrap">
-          <button id="continueBtn" class="continue-btn" type="button" disabled>Continue (30)</button>
-        </div>
+        <img class="mockup" src="process/screenshots/Tool Build (atmosphere) (1).png" alt="Tool Build break reminder mockup" />
+        <button id="continueBtn" class="continue-btn" type="button" disabled>Continue (30)</button>
 
         <script>
           let remaining = 30;
