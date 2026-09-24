@@ -153,6 +153,7 @@ function getBreakPopupMarkup() {
             background: var(--panel-strong);
             border: 3px solid rgba(0, 0, 0, 0.15);
             box-sizing: border-box;
+            font-family: "Quicksand", "Segoe UI", sans-serif;
             font-size: clamp(2.5rem, 4vw, 5rem);
             line-height: 1.1;
             letter-spacing: -0.06em;
@@ -189,6 +190,7 @@ function getBreakPopupMarkup() {
             letter-spacing: -0.08em;
             text-align: center;
             font-weight: 500;
+            font-family: "Quicksand", "Segoe UI", sans-serif;
           }
 
           .continue-wrap {
@@ -204,7 +206,7 @@ function getBreakPopupMarkup() {
             border-radius: 18px;
             background: var(--panel-strong);
             color: var(--button-text);
-            font: inherit;
+            font-family: "Quicksand", "Segoe UI", sans-serif;
             font-size: clamp(2rem, 3vw, 4rem);
             line-height: 1;
             letter-spacing: -0.06em;

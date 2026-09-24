@@ -31,3 +31,6 @@ User prompt:
 
 User prompt:
 "can you make the popup look more like the Tool Build (atmosphere)(1).png? However, when continue button is pressed, it should close the popup and navigate back to the webpage. Also, if you could make the popup unable to be closed until that timer is up, that'd be great. If that is the case, then the continue button should be the only way to exit the popup."
+
+User prompt:
+"so the penguin is supposed to say the words, and it should be in quicksand font"
