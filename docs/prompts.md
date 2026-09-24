@@ -46,3 +46,6 @@ User prompt:
 
 User prompt:
 "also remember to update prompts.md with all prompts"
+
+User prompt:
+"it's still not using the file"

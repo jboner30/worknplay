@@ -88,7 +88,8 @@ function getSetupPopupMarkup() {
 }
 
 function getBreakPopupMarkup() {
-  const arduinoAssetUrl = new URL("process/screenshots/arduino!!.png", window.location.href).toString();
+  const appBaseUrl = new URL("./", window.location.href).toString();
+  const arduinoAssetUrl = new URL("process/screenshots/arduino!!.png", appBaseUrl).toString();
 
   return `
     <!DOCTYPE html>
