@@ -61,3 +61,6 @@ User prompt:
 
 User prompt:
 "it's still showing the old window for some reason"
+
+User prompt:
+"the popup no longer appears"

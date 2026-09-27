@@ -338,10 +338,8 @@ function requestNotificationPermission() {
 }
 
 function showBreakReminder() {
-  if (document.hidden || !document.hasFocus()) {
-    if (openReminderPopup()) {
-      return;
-    }
+  if (openReminderPopup()) {
+    return;
   }
 
   if ("Notification" in window && Notification.permission === "granted") {
