@@ -21,13 +21,10 @@ function getSetupPopupMarkup() {
         <title>Popup ready</title>
         <style>
           :root {
-            --bg: #f5f5f5;
-            --panel: #ffffff;
-            --panel-alt: #f8f8f8;
-            --border: #e5e5e5;
-            --text: #111111;
-            --muted: #666666;
-            --accent: #2f6fed;
+            --screen-bg: #0f172a;
+            --overlay: rgba(15, 23, 42, 0.82);
+            --accent: #7dd3fc;
+            --text: #f8fafc;
           }
 
           * { box-sizing: border-box; }
@@ -36,8 +33,8 @@ function getSetupPopupMarkup() {
             margin: 0;
             width: 100%;
             height: 100%;
-            font-family: "Quicksand", "Segoe UI", sans-serif;
-            background: var(--bg);
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, var(--screen-bg), #1d4ed8);
             color: var(--text);
           }
 
@@ -55,9 +52,9 @@ function getSetupPopupMarkup() {
             text-align: center;
             padding: 48px;
             border-radius: 28px;
-            background: var(--panel);
-            border: 1px solid var(--border);
-            box-shadow: 0 18px 36px rgba(17, 17, 17, 0.08);
+            background: var(--overlay);
+            border: 1px solid rgba(125, 211, 252, 0.3);
+            box-shadow: 0 30px 80px rgba(15, 23, 42, 0.5);
           }
 
           h1 {
@@ -71,7 +68,6 @@ function getSetupPopupMarkup() {
             margin: 0;
             font-size: clamp(1.15rem, 2vw, 2rem);
             line-height: 1.5;
-            color: var(--text);
           }
         </style>
       </head>
@@ -96,13 +92,10 @@ function getBreakPopupMarkup() {
         <title>Break time</title>
         <style>
           :root {
-            --bg: #f5f5f5;
-            --panel: #ffffff;
-            --panel-alt: #f8f8f8;
-            --border: #e5e5e5;
-            --text: #111111;
-            --muted: #666666;
-            --accent: #2f6fed;
+            --screen-bg: #111827;
+            --overlay: rgba(17, 24, 39, 0.85);
+            --accent: #fbbf24;
+            --text: #f8fafc;
           }
 
           * { box-sizing: border-box; }
@@ -111,8 +104,8 @@ function getBreakPopupMarkup() {
             margin: 0;
             width: 100%;
             height: 100%;
-            font-family: "Quicksand", "Segoe UI", sans-serif;
-            background: var(--bg);
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, var(--screen-bg), #b45309);
             color: var(--text);
           }
 
@@ -130,9 +123,9 @@ function getBreakPopupMarkup() {
             text-align: center;
             padding: 48px;
             border-radius: 28px;
-            background: var(--panel);
-            border: 1px solid var(--border);
-            box-shadow: 0 18px 36px rgba(17, 17, 17, 0.08);
+            background: var(--overlay);
+            border: 1px solid rgba(251, 191, 36, 0.35);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
           }
 
           h1 {
@@ -146,71 +139,16 @@ function getBreakPopupMarkup() {
             margin: 0;
             font-size: clamp(1.15rem, 2vw, 2rem);
             line-height: 1.5;
-            color: var(--text);
-          }
-
-          .continue-btn {
-            appearance: none;
-            border: none;
-            border-radius: 16px;
-            background: var(--panel-alt);
-            color: var(--text);
-            font: inherit;
-            font-size: clamp(1.4rem, 2.6vw, 3rem);
-            line-height: 1;
-            padding: 18px 28px;
-            min-width: min(52vw, 500px);
-            margin-top: 32px;
-            cursor: pointer;
-          }
-
-          .continue-btn:disabled {
-            opacity: 0.9;
-            cursor: not-allowed;
           }
         </style>
       </head>
       <body>
         <div class="fullscreen-panel">
           <div>
-            <h1>Popup ready.</h1>
-            <p>You can now close this window.</p>
-            <button id="continueBtn" class="continue-btn" type="button" disabled>Continue (30)</button>
+            <h1>Break time!</h1>
+            <p>Stand up, stretch, and take a short break.</p>
           </div>
         </div>
-
-        <script>
-          let remaining = 30;
-          const continueBtn = document.getElementById('continueBtn');
-          const timer = setInterval(() => {
-            remaining -= 1;
-
-            if (remaining <= 0) {
-              clearInterval(timer);
-              continueBtn.disabled = false;
-              continueBtn.textContent = 'Continue';
-              return;
-            }
-
-            continueBtn.textContent = 'Continue (' + remaining + ')';
-          }, 1000);
-
-          continueBtn.addEventListener('click', () => {
-            if (continueBtn.disabled) return;
-            if (window.opener && !window.opener.closed) {
-              window.opener.focus();
-            }
-            window.close();
-          });
-
-          window.addEventListener('beforeunload', (event) => {
-            if (continueBtn.disabled) {
-              event.preventDefault();
-              event.returnValue = '';
-              return '';
-            }
-          });
-        </script>
       </body>
     </html>
   `;
@@ -218,8 +156,8 @@ function getBreakPopupMarkup() {
 
 function openReminderPopup() {
   if (reminderPopup && !reminderPopup.closed) {
-    reminderPopup.close();
-    reminderPopup = null;
+    reminderPopup.focus();
+    return true;
   }
 
   reminderPopup = window.open(
@@ -240,8 +178,8 @@ function openReminderPopup() {
 
 function openSetupPopup() {
   if (reminderPopup && !reminderPopup.closed) {
-    reminderPopup.close();
-    reminderPopup = null;
+    reminderPopup.focus();
+    return true;
   }
 
   reminderPopup = window.open(
@@ -338,8 +276,10 @@ function requestNotificationPermission() {
 }
 
 function showBreakReminder() {
-  if (openReminderPopup()) {
-    return;
+  if (document.hidden || !document.hasFocus()) {
+    if (openReminderPopup()) {
+      return;
+    }
   }
 
   if ("Notification" in window && Notification.permission === "granted") {
