@@ -1,13 +1,12 @@
 :root {
   --bg: #f5f5f4;
-  --panel: rgba(255, 255, 255, 0.88);
+  --panel: rgba(255, 255, 255, 0.95);
   --panel-border: rgba(17, 24, 39, 0.08);
   --text: #111827;
   --muted: #6b7280;
   --soft: #f3f4f6;
-  --shadow: rgba(17, 24, 39, 0.08);
+  --shadow: rgba(17, 24, 39, 0.12);
   --accent: #111827;
-  --accent-soft: #e5e7eb;
 }
 
 * {
@@ -17,11 +16,10 @@
 body {
   margin: 0;
   min-height: 100vh;
-  display: grid;
-  place-items: center;
   font-family: Arial, Helvetica, sans-serif;
   background: var(--bg);
   color: var(--text);
+  position: relative;
 }
 
 button,
@@ -29,100 +27,96 @@ input {
   font: inherit;
 }
 
-.app {
-  width: min(100%, 560px);
-  padding: 24px;
-}
-
-.timer-card {
+.floating-timer {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: min(92vw, 320px);
   background: var(--panel);
   border: 1px solid var(--panel-border);
-  border-radius: 28px;
-  box-shadow: 0 22px 40px var(--shadow);
-  padding: 28px 24px 22px;
+  border-radius: 18px;
+  box-shadow: 0 20px 40px var(--shadow);
+  overflow: hidden;
+  z-index: 10;
 }
 
-.eyebrow {
-  margin: 0 0 12px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.72rem;
-  font-weight: 700;
-}
-
-h1 {
-  margin: 0 0 26px;
-  font-size: clamp(1.8rem, 3vw, 2.5rem);
-  font-weight: 700;
-}
-
-.display-wrap {
+.timer-header {
   display: flex;
-  justify-content: center;
-  margin-bottom: 22px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #fff;
+  border-bottom: 1px solid rgba(17, 24, 39, 0.06);
+  font-weight: 700;
+}
+
+.mini-button {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--soft);
+  color: var(--text);
+  border: none;
+  padding: 0;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.timer-body {
+  padding: 14px;
+}
+
+.timer-body.hidden {
+  display: none;
 }
 
 .time-display {
-  font-size: clamp(3rem, 9vw, 6rem);
+  font-size: clamp(2.2rem, 6vw, 3rem);
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: var(--text);
-  background: var(--soft);
-  border: 1px solid rgba(17, 24, 39, 0.04);
-  border-radius: 18px;
-  min-width: 220px;
-  padding: 16px 18px;
   text-align: center;
+  padding: 12px 10px 14px;
+  color: var(--text);
 }
 
 .settings {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  margin-bottom: 22px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .settings label {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 0.8rem;
 }
 
 .settings input {
-  padding: 12px 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(17, 24, 39, 0.1);
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(17, 24, 39, 0.12);
   background: #fff;
   color: var(--text);
 }
 
 .controls {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   flex-wrap: wrap;
-}
-
-.permission-row {
-  margin-top: 16px;
-}
-
-.permission-button {
-  width: 100%;
-  background: #f3f4f6;
-  color: var(--text);
-  border: 1px solid rgba(17, 24, 39, 0.1);
 }
 
 button {
   border: none;
-  border-radius: 12px;
-  padding: 12px 18px;
+  border-radius: 10px;
+  padding: 9px 12px;
   cursor: pointer;
   font-weight: 700;
-  transition: transform 0.15s ease, opacity 0.15s ease;
+  transition: transform 0.15s ease;
 }
 
 button:hover {
@@ -136,17 +130,20 @@ button:active {
 .primary {
   background: var(--accent);
   color: white;
+  flex: 1 1 0;
 }
 
 .secondary {
   background: var(--soft);
   color: var(--text);
+  flex: 1 1 0;
 }
 
 .ghost {
   background: transparent;
   color: var(--text);
   border: 1px solid rgba(17, 24, 39, 0.12);
+  flex: 1 1 0;
 }
 
 .reminder {
@@ -154,8 +151,8 @@ button:active {
   inset: 0;
   display: grid;
   place-items: center;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(4px);
   z-index: 20;
 }
 
@@ -163,31 +160,32 @@ button:active {
   display: none;
 }
 
-.reminder-content {
+.reminder-card {
   background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(17, 24, 39, 0.1);
-  border-radius: 24px;
-  box-shadow: 0 20px 40px rgba(17, 24, 39, 0.08);
-  padding: 28px 24px;
-  width: min(90vw, 420px);
+  border-radius: 20px;
+  box-shadow: 0 18px 40px rgba(17, 24, 39, 0.1);
+  max-width: min(92vw, 380px);
+  padding: 22px 20px;
   text-align: center;
 }
 
 .reminder h2 {
-  margin: 0 0 12px;
-  font-size: 2rem;
-  color: var(--text);
+  margin: 0 0 10px;
+  font-size: 1.8rem;
 }
 
 .reminder p {
-  margin: 0 0 18px;
+  margin: 0 0 16px;
   color: var(--muted);
   line-height: 1.5;
 }
 
 @media (max-width: 540px) {
-  .app {
-    padding: 16px;
+  .floating-timer {
+    right: 12px;
+    bottom: 12px;
+    width: min(94vw, 300px);
   }
 
   .settings {
@@ -196,9 +194,5 @@ button:active {
 
   .controls {
     flex-direction: column;
-  }
-
-  button {
-    width: 100%;
   }
 }
