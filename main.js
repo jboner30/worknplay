@@ -12,6 +12,7 @@ const modeLabel = document.getElementById('modeLabel');
 const startPauseButton = document.getElementById('startPauseButton');
 const resetButton = document.getElementById('resetButton');
 const skipButton = document.getElementById('skipButton');
+const enableNotificationsButton = document.getElementById('enableNotificationsButton');
 const focusMinutesInput = document.getElementById('focusMinutes');
 const breakMinutesInput = document.getElementById('breakMinutes');
 const reminderBox = document.getElementById('reminder');
@@ -66,13 +67,42 @@ function setMode(mode) {
   updateDisplay();
 }
 
-function startTimer() {
-  if (state.running) {
+function updatePermissionButton() {
+  if (!('Notification' in window)) {
+    enableNotificationsButton.textContent = 'Browser does not support notifications';
+    enableNotificationsButton.disabled = true;
     return;
   }
 
-  if ('Notification' in window && Notification.permission === 'default') {
-    Notification.requestPermission().catch(() => {});
+  const permission = Notification.permission;
+  if (permission === 'granted') {
+    enableNotificationsButton.textContent = 'Break popup enabled';
+  } else if (permission === 'denied') {
+    enableNotificationsButton.textContent = 'Break popup blocked';
+  } else {
+    enableNotificationsButton.textContent = 'Enable break popup';
+  }
+}
+
+function requestNotificationPermission() {
+  if (!('Notification' in window)) {
+    window.alert('This browser does not support notification popups.');
+    return;
+  }
+
+  Notification.requestPermission().then((permission) => {
+    if (permission === 'granted') {
+      window.alert('Break popup permission enabled. You will receive alerts when the timer finishes.');
+    }
+    updatePermissionButton();
+  }).catch(() => {
+    updatePermissionButton();
+  });
+}
+
+function startTimer() {
+  if (state.running) {
+    return;
   }
 
   state.running = true;
@@ -126,8 +156,8 @@ function showReminder() {
     new Notification(title, { body: message });
   }
 
-  if (window.alert) {
-    window.alert(message);
+  if (document.visibilityState !== 'visible') {
+    window.focus();
   }
 }
 
@@ -150,6 +180,7 @@ function handleSessionComplete() {
 
 startPauseButton.addEventListener('click', toggleTimer);
 resetButton.addEventListener('click', resetTimer);
+enableNotificationsButton.addEventListener('click', requestNotificationPermission);
 skipButton.addEventListener('click', () => {
   reminderBox.classList.add('hidden');
   setMode(state.mode === 'focus' ? 'break' : 'focus');
@@ -174,3 +205,4 @@ breakMinutesInput.addEventListener('change', () => {
 
 applyDurationValues();
 updateDisplay();
+updatePermissionButton();
