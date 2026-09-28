@@ -67,6 +67,10 @@ function setMode(mode) {
   updateDisplay();
 }
 
+function notificationsAreEnabled() {
+  return 'Notification' in window && Notification.permission === 'granted';
+}
+
 function updatePermissionButton() {
   if (!('Notification' in window)) {
     enableNotificationsButton.textContent = 'Browser does not support notifications';
@@ -101,6 +105,8 @@ function requestNotificationPermission() {
   Notification.requestPermission().then((permission) => {
     if (permission === 'granted') {
       window.alert('Break popup permission enabled. You will receive alerts when the timer finishes.');
+    } else {
+      window.alert('Break popup permission is still blocked. The timer will remain locked until you allow notifications.');
     }
     updatePermissionButton();
   }).catch(() => {
@@ -113,7 +119,8 @@ function startTimer() {
     return;
   }
 
-  if ('Notification' in window && Notification.permission !== 'granted') {
+  if (!notificationsAreEnabled()) {
+    updatePermissionButton();
     window.alert('Please enable break popup permissions before starting the timer.');
     return;
   }
@@ -143,11 +150,25 @@ function pauseTimer() {
 }
 
 function toggleTimer() {
+  if (!notificationsAreEnabled()) {
+    handlePermissionChange();
+    return;
+  }
+
   if (state.running) {
     pauseTimer();
   } else {
     startTimer();
   }
+}
+
+function handlePermissionChange() {
+  if (!notificationsAreEnabled() && state.running) {
+    pauseTimer();
+    startPauseButton.disabled = true;
+    window.alert('Notifications are blocked, so the timer has been stopped. Please enable break popup permissions to resume.');
+  }
+  updatePermissionButton();
 }
 
 function resetTimer() {
@@ -191,9 +212,9 @@ function handleSessionComplete() {
   updateDisplay();
 }
 
-startPauseButton.addEventListener('click', toggleTimer);
 resetButton.addEventListener('click', resetTimer);
 enableNotificationsButton.addEventListener('click', requestNotificationPermission);
+startPauseButton.addEventListener('click', toggleTimer);
 skipButton.addEventListener('click', () => {
   reminderBox.classList.add('hidden');
   setMode(state.mode === 'focus' ? 'break' : 'focus');
