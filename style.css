@@ -190,6 +190,10 @@ button:active {
   font-size: 0.82rem;
 }
 
+.app.widget-mode .controls #breakPopupButton {
+  width: 100%;
+}
+
 @media (max-width: 540px) {
   .app {
     padding: 16px;
