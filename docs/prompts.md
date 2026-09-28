@@ -62,3 +62,6 @@ User prompt:
 
 User prompt:
 "how about we add a bell sound to get the user attention? make sure to add a prompt to turn on the volume on the webpage"
+
+User prompt:
+"can you make it so that the sound will continuously beep until the user clicks another button?"

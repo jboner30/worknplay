@@ -18,10 +18,15 @@ const breakPopupButton = document.getElementById('breakPopupButton');
 const focusMinutesInput = document.getElementById('focusMinutes');
 const breakMinutesInput = document.getElementById('breakMinutes');
 const testSoundButton = document.getElementById('testSoundButton');
+const stopSoundButton = document.getElementById('stopSoundButton');
 
 let timerWindow = null;
 let notificationPermissionRequested = false;
 let audioContext = null;
+let bellIntervalId = null;
+let bellActive = false;
+let bellGeneration = 0;
+const bellOscillators = new Set();
 
 function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60);
@@ -88,7 +93,7 @@ function prepareAudio() {
   }
 }
 
-async function playBell() {
+async function playBell(generation) {
   if (!('AudioContext' in window)) {
     return;
   }
@@ -97,6 +102,9 @@ async function playBell() {
     audioContext ??= new AudioContext();
     if (audioContext.state === 'suspended') {
       await audioContext.resume();
+    }
+    if (!bellActive || generation !== bellGeneration) {
+      return;
     }
 
     const startTime = audioContext.currentTime;
@@ -112,12 +120,41 @@ async function playBell() {
       volume.gain.exponentialRampToValueAtTime(0.0001, startTime + 1.1);
       oscillator.connect(volume);
       volume.connect(audioContext.destination);
+      bellOscillators.add(oscillator);
+      oscillator.addEventListener('ended', () => bellOscillators.delete(oscillator), { once: true });
       oscillator.start(startTime);
       oscillator.stop(startTime + 1.15);
     });
   } catch (error) {
     console.warn('Could not play the break bell', error);
   }
+}
+
+function startBell() {
+  stopBell();
+  bellActive = true;
+  const generation = bellGeneration;
+  stopSoundButton.hidden = false;
+  playBell(generation);
+  bellIntervalId = setInterval(() => {
+    if (bellActive) {
+      playBell(generation);
+    }
+  }, 1600);
+}
+
+function stopBell() {
+  bellActive = false;
+  bellGeneration += 1;
+  clearInterval(bellIntervalId);
+  bellIntervalId = null;
+  bellOscillators.forEach((oscillator) => {
+    try {
+      oscillator.stop();
+    } catch {}
+  });
+  bellOscillators.clear();
+  stopSoundButton.hidden = true;
 }
 
 function requestNotificationPermissionIfNeeded() {
@@ -310,7 +347,7 @@ function handleSessionComplete() {
   if (state.mode === 'focus') {
     state.mode = 'break';
     state.remainingSeconds = state.breakDuration * 60;
-    playBell();
+    startBell();
     notifyBreak();
     updateDisplay();
     updateTimerWindow();
@@ -327,7 +364,8 @@ startPauseButton.addEventListener('click', toggleTimer);
 breakPopupButton.addEventListener('click', () => {
   openTimerWindow();
 });
-testSoundButton.addEventListener('click', playBell);
+testSoundButton.addEventListener('click', startBell);
+stopSoundButton.addEventListener('click', stopBell);
 skipButton.addEventListener('click', () => {
   setMode(state.mode === 'focus' ? 'break' : 'focus');
   updateTimerWindow();
