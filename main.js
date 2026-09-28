@@ -71,16 +71,24 @@ function updatePermissionButton() {
   if (!('Notification' in window)) {
     enableNotificationsButton.textContent = 'Browser does not support notifications';
     enableNotificationsButton.disabled = true;
+    startPauseButton.disabled = true;
+    startPauseButton.title = 'Browser notification permission is required to use the timer.';
     return;
   }
 
   const permission = Notification.permission;
   if (permission === 'granted') {
     enableNotificationsButton.textContent = 'Break popup enabled';
+    startPauseButton.disabled = false;
+    startPauseButton.title = '';
   } else if (permission === 'denied') {
     enableNotificationsButton.textContent = 'Break popup blocked';
+    startPauseButton.disabled = true;
+    startPauseButton.title = 'Please allow notifications to use the timer.';
   } else {
     enableNotificationsButton.textContent = 'Enable break popup';
+    startPauseButton.disabled = true;
+    startPauseButton.title = 'Please enable notification permission to start the timer.';
   }
 }
 
@@ -102,6 +110,11 @@ function requestNotificationPermission() {
 
 function startTimer() {
   if (state.running) {
+    return;
+  }
+
+  if ('Notification' in window && Notification.permission !== 'granted') {
+    window.alert('Please enable break popup permissions before starting the timer.');
     return;
   }
 
