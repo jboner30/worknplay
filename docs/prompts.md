@@ -27,3 +27,11 @@ User prompt:
 
 User prompt:
 "update prompts.md with all prompts from this session"
+
+## 2026-09-28
+
+User prompt:
+"please update prompts.md with all prompts from this session"
+
+User prompt:
+"ok. make a webpage "focus timer" that will remind the user to take a break when working"
