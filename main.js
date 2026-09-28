@@ -7,13 +7,12 @@ const state = {
   running: false,
 };
 
+const app = document.getElementById('app');
 const timeDisplay = document.getElementById('timeDisplay');
 const modeLabel = document.getElementById('modeLabel');
 const startPauseButton = document.getElementById('startPauseButton');
 const resetButton = document.getElementById('resetButton');
 const skipButton = document.getElementById('skipButton');
-const collapseButton = document.getElementById('collapseButton');
-const timerBody = document.getElementById('timerBody');
 const focusMinutesInput = document.getElementById('focusMinutes');
 const breakMinutesInput = document.getElementById('breakMinutes');
 const reminderBox = document.getElementById('reminder');
@@ -68,9 +67,8 @@ function setMode(mode) {
   updateDisplay();
 }
 
-function toggleTimerBody() {
-  timerBody.classList.toggle('hidden');
-  collapseButton.textContent = timerBody.classList.contains('hidden') ? '+' : '−';
+function activateWidgetMode() {
+  app.classList.add('widget-mode');
 }
 
 function startTimer() {
@@ -78,6 +76,7 @@ function startTimer() {
     return;
   }
 
+  activateWidgetMode();
   state.running = true;
   startPauseButton.textContent = 'Pause';
 
@@ -139,7 +138,6 @@ function handleSessionComplete() {
 
 resetButton.addEventListener('click', resetTimer);
 startPauseButton.addEventListener('click', toggleTimer);
-collapseButton.addEventListener('click', toggleTimerBody);
 skipButton.addEventListener('click', () => {
   reminderBox.classList.add('hidden');
   setMode(state.mode === 'focus' ? 'break' : 'focus');
@@ -164,4 +162,3 @@ breakMinutesInput.addEventListener('change', () => {
 
 applyDurationValues();
 updateDisplay();
-collapseButton.textContent = '−';

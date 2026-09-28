@@ -7,22 +7,22 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="floating-timer" aria-live="polite">
-      <div class="timer-header">
-        <span id="modeLabel">Focus Session</span>
-        <button id="collapseButton" class="mini-button" aria-label="Collapse timer">−</button>
-      </div>
+    <main class="app" id="app">
+      <div class="timer-card">
+        <p class="eyebrow">Focus Timer</p>
+        <h1 id="modeLabel">Focus Session</h1>
 
-      <div class="timer-body hidden" id="timerBody">
-        <div id="timeDisplay" class="time-display">25:00</div>
+        <div class="display-wrap">
+          <div id="timeDisplay" class="time-display" aria-live="polite">25:00</div>
+        </div>
 
         <div class="settings">
           <label>
-            Focus
+            Focus (min)
             <input id="focusMinutes" type="number" min="1" max="180" value="25" />
           </label>
           <label>
-            Break
+            Break (min)
             <input id="breakMinutes" type="number" min="1" max="60" value="5" />
           </label>
         </div>
@@ -33,15 +33,15 @@
           <button id="skipButton" class="ghost">Skip</button>
         </div>
       </div>
-    </div>
 
-    <div id="reminder" class="reminder hidden" role="alert" aria-live="assertive">
-      <div class="reminder-card">
-        <h2>Break time</h2>
-        <p>Step away from your screen, stretch, and recharge for a few minutes.</p>
-        <button id="dismissReminder" class="primary">Dismiss</button>
+      <div id="reminder" class="reminder hidden" role="alert" aria-live="assertive">
+        <div class="reminder-card">
+          <h2>Break time</h2>
+          <p>Step away from your screen, stretch, and recharge for a few minutes.</p>
+          <button id="dismissReminder" class="primary">Dismiss</button>
+        </div>
       </div>
-    </div>
+    </main>
 
     <script src="main.js"></script>
   </body>
