@@ -59,3 +59,6 @@ User prompt:
 
 User prompt:
 "but if the user is focusing on something else, then the tab is inactive and this won't work"
+
+User prompt:
+"how about we add a bell sound to get the user attention? make sure to add a prompt to turn on the volume on the webpage"

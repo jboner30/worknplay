@@ -100,6 +100,20 @@ h1 {
   color: var(--text);
 }
 
+.sound-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.sound-controls p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
 .controls {
   display: flex;
   gap: 12px;
@@ -178,6 +192,21 @@ button:active {
 
 .app.widget-mode .settings {
   display: none;
+}
+
+.app.widget-mode .sound-controls {
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.app.widget-mode .sound-controls p {
+  font-size: 0.76rem;
+}
+
+.app.widget-mode .sound-controls button {
+  flex: 0 0 auto;
+  padding: 7px 9px;
+  font-size: 0.78rem;
 }
 
 .app.widget-mode .controls {

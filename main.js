@@ -17,9 +17,11 @@ const skipButton = document.getElementById('skipButton');
 const breakPopupButton = document.getElementById('breakPopupButton');
 const focusMinutesInput = document.getElementById('focusMinutes');
 const breakMinutesInput = document.getElementById('breakMinutes');
+const testSoundButton = document.getElementById('testSoundButton');
 
 let timerWindow = null;
 let notificationPermissionRequested = false;
+let audioContext = null;
 
 function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60);
@@ -73,6 +75,49 @@ function setMode(mode) {
 
 function activateWidgetMode() {
   app.classList.add('widget-mode');
+}
+
+function prepareAudio() {
+  if (!('AudioContext' in window)) {
+    return;
+  }
+
+  audioContext ??= new AudioContext();
+  if (audioContext.state === 'suspended') {
+    audioContext.resume().catch(() => {});
+  }
+}
+
+async function playBell() {
+  if (!('AudioContext' in window)) {
+    return;
+  }
+
+  try {
+    audioContext ??= new AudioContext();
+    if (audioContext.state === 'suspended') {
+      await audioContext.resume();
+    }
+
+    const startTime = audioContext.currentTime;
+    [880, 1320].forEach((frequency, index) => {
+      const oscillator = audioContext.createOscillator();
+      const volume = audioContext.createGain();
+      const peak = 0.2 / (index + 1);
+
+      oscillator.type = 'sine';
+      oscillator.frequency.value = frequency;
+      volume.gain.setValueAtTime(0.0001, startTime);
+      volume.gain.exponentialRampToValueAtTime(peak, startTime + 0.02);
+      volume.gain.exponentialRampToValueAtTime(0.0001, startTime + 1.1);
+      oscillator.connect(volume);
+      volume.connect(audioContext.destination);
+      oscillator.start(startTime);
+      oscillator.stop(startTime + 1.15);
+    });
+  } catch (error) {
+    console.warn('Could not play the break bell', error);
+  }
 }
 
 function requestNotificationPermissionIfNeeded() {
@@ -204,6 +249,7 @@ function startTimer() {
     return;
   }
 
+  prepareAudio();
   requestNotificationPermissionIfNeeded();
   openTimerWindow();
   activateWidgetMode();
@@ -264,6 +310,7 @@ function handleSessionComplete() {
   if (state.mode === 'focus') {
     state.mode = 'break';
     state.remainingSeconds = state.breakDuration * 60;
+    playBell();
     notifyBreak();
     updateDisplay();
     updateTimerWindow();
@@ -280,6 +327,7 @@ startPauseButton.addEventListener('click', toggleTimer);
 breakPopupButton.addEventListener('click', () => {
   openTimerWindow();
 });
+testSoundButton.addEventListener('click', playBell);
 skipButton.addEventListener('click', () => {
   setMode(state.mode === 'focus' ? 'break' : 'focus');
   updateTimerWindow();
