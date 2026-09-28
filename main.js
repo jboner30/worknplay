@@ -3,6 +3,7 @@ const state = {
   focusDuration: 25,
   breakDuration: 5,
   remainingSeconds: 25 * 60,
+  deadline: null,
   timerId: null,
   running: false,
 };
@@ -18,6 +19,7 @@ const focusMinutesInput = document.getElementById('focusMinutes');
 const breakMinutesInput = document.getElementById('breakMinutes');
 
 let timerWindow = null;
+let notificationPermissionRequested = false;
 
 function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60);
@@ -62,6 +64,7 @@ function setMode(mode) {
   state.mode = mode;
   state.remainingSeconds =
     mode === 'focus' ? state.focusDuration * 60 : state.breakDuration * 60;
+  state.deadline = null;
   state.running = false;
   clearTimer();
   startPauseButton.textContent = 'Start';
@@ -70,6 +73,39 @@ function setMode(mode) {
 
 function activateWidgetMode() {
   app.classList.add('widget-mode');
+}
+
+function requestNotificationPermissionIfNeeded() {
+  if (notificationPermissionRequested || !('Notification' in window)) {
+    return;
+  }
+
+  if (document.visibilityState === 'visible') {
+    Notification.requestPermission().then((permission) => {
+      notificationPermissionRequested = true;
+      if (permission === 'granted') {
+        console.log('Notification permission granted');
+      }
+    }).catch(() => {
+      notificationPermissionRequested = true;
+    });
+  }
+}
+
+function notifyBreak() {
+  if ('Notification' in window && Notification.permission === 'granted') {
+    new Notification('Focus Timer', {
+      body: 'Take a break!'
+    });
+  }
+
+  if (timerWindow && !timerWindow.closed) {
+    try {
+      timerWindow.focus();
+    } catch (error) {
+      console.log('Focus blocked by browser');
+    }
+  }
 }
 
 function updateTimerWindow() {
@@ -168,17 +204,21 @@ function startTimer() {
     return;
   }
 
+  requestNotificationPermissionIfNeeded();
   openTimerWindow();
   activateWidgetMode();
   state.running = true;
+  state.deadline = Date.now() + state.remainingSeconds * 1000;
   startPauseButton.textContent = 'Pause';
 
   state.timerId = setInterval(() => {
-    state.remainingSeconds -= 1;
+    state.remainingSeconds = Math.ceil((state.deadline - Date.now()) / 1000);
 
     if (state.remainingSeconds <= 0) {
       clearTimer();
       state.running = false;
+      state.deadline = null;
+      state.remainingSeconds = 0;
       startPauseButton.textContent = 'Start';
       handleSessionComplete();
       return;
@@ -190,6 +230,8 @@ function startTimer() {
 }
 
 function pauseTimer() {
+  state.remainingSeconds = Math.max(0, Math.ceil((state.deadline - Date.now()) / 1000));
+  state.deadline = null;
   state.running = false;
   clearTimer();
   startPauseButton.textContent = 'Resume';
@@ -207,6 +249,7 @@ function toggleTimer() {
 function resetTimer() {
   clearTimer();
   state.running = false;
+  state.deadline = null;
   startPauseButton.textContent = 'Start';
   state.remainingSeconds = state.mode === 'focus' ? state.focusDuration * 60 : state.breakDuration * 60;
   updateDisplay();
@@ -221,6 +264,7 @@ function handleSessionComplete() {
   if (state.mode === 'focus') {
     state.mode = 'break';
     state.remainingSeconds = state.breakDuration * 60;
+    notifyBreak();
     updateDisplay();
     updateTimerWindow();
   } else {
@@ -239,6 +283,16 @@ breakPopupButton.addEventListener('click', () => {
 skipButton.addEventListener('click', () => {
   setMode(state.mode === 'focus' ? 'break' : 'focus');
   updateTimerWindow();
+});
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    requestNotificationPermissionIfNeeded();
+  }
+});
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    requestNotificationPermissionIfNeeded();
+  }
 });
 
 focusMinutesInput.addEventListener('change', () => {
