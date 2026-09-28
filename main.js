@@ -15,8 +15,6 @@ const resetButton = document.getElementById('resetButton');
 const skipButton = document.getElementById('skipButton');
 const focusMinutesInput = document.getElementById('focusMinutes');
 const breakMinutesInput = document.getElementById('breakMinutes');
-const reminderBox = document.getElementById('reminder');
-const dismissReminderButton = document.getElementById('dismissReminder');
 
 function formatTime(totalSeconds) {
   const minutes = Math.floor(totalSeconds / 60);
@@ -115,7 +113,10 @@ function resetTimer() {
   startPauseButton.textContent = 'Start';
   state.remainingSeconds = state.mode === 'focus' ? state.focusDuration * 60 : state.breakDuration * 60;
   updateDisplay();
-  reminderBox.classList.add('hidden');
+  if (reminderWindow && !reminderWindow.closed) {
+    reminderWindow.close();
+    reminderWindow = null;
+  }
 }
 
 let reminderWindow = null;
@@ -126,7 +127,7 @@ function showReminder() {
     return;
   }
 
-  reminderWindow = window.open('about:blank', 'focusTimerBreak', 'width=360,height=220');
+  reminderWindow = window.open('about:blank', 'focusTimerBreak', 'width=420,height=260');
 
   if (reminderWindow) {
     reminderWindow.document.write(`
@@ -146,19 +147,20 @@ function showReminder() {
               text-align: center;
             }
             .card {
-              width: min(90%, 300px);
+              width: min(88%, 320px);
               background: white;
-              border-radius: 16px;
-              box-shadow: 0 12px 28px rgba(17, 24, 39, 0.12);
-              padding: 24px 20px;
+              border-radius: 18px;
+              box-shadow: 0 16px 32px rgba(17, 24, 39, 0.12);
+              padding: 28px 22px;
             }
             h1 {
-              margin: 0 0 16px;
+              margin: 0 0 12px;
               font-size: 2rem;
             }
             p {
               margin: 0;
               line-height: 1.5;
+              color: #6b7280;
             }
           </style>
         </head>
@@ -194,11 +196,11 @@ function handleSessionComplete() {
 resetButton.addEventListener('click', resetTimer);
 startPauseButton.addEventListener('click', toggleTimer);
 skipButton.addEventListener('click', () => {
-  reminderBox.classList.add('hidden');
+  if (reminderWindow && !reminderWindow.closed) {
+    reminderWindow.close();
+    reminderWindow = null;
+  }
   setMode(state.mode === 'focus' ? 'break' : 'focus');
-});
-dismissReminderButton.addEventListener('click', () => {
-  reminderBox.classList.add('hidden');
 });
 
 focusMinutesInput.addEventListener('change', () => {
