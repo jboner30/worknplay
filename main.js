@@ -118,8 +118,60 @@ function resetTimer() {
   reminderBox.classList.add('hidden');
 }
 
+let reminderWindow = null;
+
 function showReminder() {
-  reminderBox.classList.remove('hidden');
+  if (reminderWindow && !reminderWindow.closed) {
+    reminderWindow.focus();
+    return;
+  }
+
+  reminderWindow = window.open('about:blank', 'focusTimerBreak', 'width=360,height=220');
+
+  if (reminderWindow) {
+    reminderWindow.document.write(`
+      <!doctype html>
+      <html>
+        <head>
+          <title>Break time</title>
+          <style>
+            body {
+              margin: 0;
+              display: grid;
+              place-items: center;
+              min-height: 100vh;
+              font-family: Arial, sans-serif;
+              background: #f5f5f4;
+              color: #111827;
+              text-align: center;
+            }
+            .card {
+              width: min(90%, 300px);
+              background: white;
+              border-radius: 16px;
+              box-shadow: 0 12px 28px rgba(17, 24, 39, 0.12);
+              padding: 24px 20px;
+            }
+            h1 {
+              margin: 0 0 16px;
+              font-size: 2rem;
+            }
+            p {
+              margin: 0;
+              line-height: 1.5;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="card">
+            <h1>Break time</h1>
+            <p>Step away from your screen, stretch, and recharge for a few minutes.</p>
+          </div>
+        </body>
+      </html>
+    `);
+    reminderWindow.document.close();
+  }
 }
 
 function handleSessionComplete() {
@@ -130,7 +182,10 @@ function handleSessionComplete() {
   } else {
     state.mode = 'focus';
     state.remainingSeconds = state.focusDuration * 60;
-    reminderBox.classList.add('hidden');
+    if (reminderWindow && !reminderWindow.closed) {
+      reminderWindow.close();
+      reminderWindow = null;
+    }
   }
 
   updateDisplay();
