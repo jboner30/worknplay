@@ -14,13 +14,11 @@ const modeLabel = document.getElementById('modeLabel');
 const startPauseButton = document.getElementById('startPauseButton');
 const resetButton = document.getElementById('resetButton');
 const skipButton = document.getElementById('skipButton');
-const breakPopupButton = document.getElementById('breakPopupButton');
 const focusMinutesInput = document.getElementById('focusMinutes');
 const breakMinutesInput = document.getElementById('breakMinutes');
 const testSoundButton = document.getElementById('testSoundButton');
 const stopSoundButton = document.getElementById('stopSoundButton');
 
-let timerWindow = null;
 let notificationPermissionRequested = false;
 let audioContext = null;
 let bellIntervalId = null;
@@ -76,10 +74,6 @@ function setMode(mode) {
   clearTimer();
   startPauseButton.textContent = 'Start';
   updateDisplay();
-}
-
-function activateWidgetMode() {
-  app.classList.add('widget-mode');
 }
 
 function prepareAudio() {
@@ -181,104 +175,6 @@ function notifyBreak() {
     });
   }
 
-  if (timerWindow && !timerWindow.closed) {
-    try {
-      timerWindow.focus();
-    } catch (error) {
-      console.log('Focus blocked by browser');
-    }
-  }
-}
-
-function updateTimerWindow() {
-  if (!timerWindow || timerWindow.closed) {
-    return;
-  }
-
-  const windowBody = timerWindow.document.body;
-
-  if (state.mode === 'focus') {
-    windowBody.innerHTML = `
-      <style>
-        body {
-          margin: 0;
-          min-height: 100vh;
-          display: grid;
-          place-items: center;
-          font-family: Arial, sans-serif;
-          background: #f5f5f4;
-          color: #111827;
-          text-align: center;
-        }
-        .card {
-          background: white;
-          border-radius: 18px;
-          box-shadow: 0 14px 30px rgba(17, 24, 39, 0.12);
-          padding: 22px 20px;
-          width: min(88vw, 280px);
-        }
-        .label {
-          font-size: 0.8rem;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: #6b7280;
-          margin-bottom: 10px;
-        }
-        .time {
-          font-size: 2.6rem;
-          font-weight: 700;
-          margin: 0;
-        }
-      </style>
-      <div class="card">
-        <div class="label">Focus</div>
-        <p class="time">${formatTime(state.remainingSeconds)}</p>
-      </div>
-    `;
-  } else {
-    windowBody.innerHTML = `
-      <style>
-        body {
-          margin: 0;
-          min-height: 100vh;
-          display: grid;
-          place-items: center;
-          font-family: Arial, sans-serif;
-          background: #111827;
-          color: white;
-          text-align: center;
-        }
-        .card {
-          background: rgba(255,255,255,0.06);
-          border: 1px solid rgba(255,255,255,0.14);
-          border-radius: 18px;
-          box-shadow: 0 14px 30px rgba(0,0,0,0.25);
-          padding: 26px 22px;
-          width: min(88vw, 300px);
-        }
-        h1 {
-          margin: 0;
-          font-size: 2rem;
-          line-height: 1.2;
-        }
-      </style>
-      <div class="card">
-        <h1>Take a break!</h1>
-      </div>
-    `;
-  }
-}
-
-function openTimerWindow() {
-  if (timerWindow && !timerWindow.closed) {
-    timerWindow.focus();
-    return;
-  }
-
-  timerWindow = window.open('about:blank', 'focusTimerWidget', 'width=320,height=220');
-  if (timerWindow) {
-    updateTimerWindow();
-  }
 }
 
 function startTimer() {
@@ -288,8 +184,6 @@ function startTimer() {
 
   prepareAudio();
   requestNotificationPermissionIfNeeded();
-  openTimerWindow();
-  activateWidgetMode();
   state.running = true;
   state.deadline = Date.now() + state.remainingSeconds * 1000;
   startPauseButton.textContent = 'Pause';
@@ -308,7 +202,6 @@ function startTimer() {
     }
 
     updateDisplay();
-    updateTimerWindow();
   }, 1000);
 }
 
@@ -318,7 +211,6 @@ function pauseTimer() {
   state.running = false;
   clearTimer();
   startPauseButton.textContent = 'Resume';
-  updateTimerWindow();
 }
 
 function toggleTimer() {
@@ -336,11 +228,6 @@ function resetTimer() {
   startPauseButton.textContent = 'Start';
   state.remainingSeconds = state.mode === 'focus' ? state.focusDuration * 60 : state.breakDuration * 60;
   updateDisplay();
-  updateTimerWindow();
-  if (timerWindow && !timerWindow.closed) {
-    timerWindow.close();
-    timerWindow = null;
-  }
 }
 
 function handleSessionComplete() {
@@ -350,25 +237,19 @@ function handleSessionComplete() {
     startBell();
     notifyBreak();
     updateDisplay();
-    updateTimerWindow();
   } else {
     state.mode = 'focus';
     state.remainingSeconds = state.focusDuration * 60;
     updateDisplay();
-    updateTimerWindow();
   }
 }
 
 resetButton.addEventListener('click', resetTimer);
 startPauseButton.addEventListener('click', toggleTimer);
-breakPopupButton.addEventListener('click', () => {
-  openTimerWindow();
-});
 testSoundButton.addEventListener('click', startBell);
 stopSoundButton.addEventListener('click', stopBell);
 skipButton.addEventListener('click', () => {
   setMode(state.mode === 'focus' ? 'break' : 'focus');
-  updateTimerWindow();
 });
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') {

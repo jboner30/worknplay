@@ -157,76 +157,6 @@ button:active {
   border: 1px solid rgba(17, 24, 39, 0.12);
 }
 
-.app.widget-mode {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  width: min(92vw, 320px);
-  padding: 0;
-  z-index: 20;
-}
-
-.app.widget-mode .timer-card {
-  padding: 12px 12px 10px;
-  border-radius: 18px;
-  box-shadow: 0 18px 34px var(--shadow);
-}
-
-.app.widget-mode .eyebrow {
-  display: none;
-}
-
-.app.widget-mode h1 {
-  margin: 0 0 8px;
-  font-size: 1rem;
-  text-align: center;
-}
-
-.app.widget-mode .display-wrap {
-  margin-bottom: 12px;
-}
-
-.app.widget-mode .time-display {
-  font-size: clamp(1.8rem, 7vw, 2.6rem);
-  letter-spacing: 0.05em;
-  min-width: 0;
-  width: 100%;
-  padding: 10px 8px;
-}
-
-.app.widget-mode .settings {
-  display: none;
-}
-
-.app.widget-mode .sound-controls {
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.app.widget-mode .sound-controls p {
-  font-size: 0.76rem;
-}
-
-.app.widget-mode .sound-controls button {
-  flex: 0 0 auto;
-  padding: 7px 9px;
-  font-size: 0.78rem;
-}
-
-.app.widget-mode .controls {
-  gap: 8px;
-}
-
-.app.widget-mode .controls button {
-  flex: 1 1 0;
-  padding: 8px 10px;
-  font-size: 0.82rem;
-}
-
-.app.widget-mode .controls #breakPopupButton {
-  width: 100%;
-}
-
 @media (max-width: 540px) {
   .app {
     padding: 16px;
@@ -240,9 +170,4 @@ button:active {
     flex-direction: column;
   }
 
-  .app.widget-mode {
-    right: 12px;
-    bottom: 12px;
-    width: min(94vw, 300px);
-  }
 }
