@@ -38,7 +38,7 @@ function updateDisplay() {
   if (state.mode === 'focus') {
     modeLabel.textContent = 'Focus Session';
   } else {
-    modeLabel.textContent = 'Break Time';
+    modeLabel.textContent = 'Take a break!';
   }
 }
 
@@ -237,6 +237,7 @@ function handleSessionComplete() {
     startBell();
     notifyBreak();
     updateDisplay();
+    startTimer();
   } else {
     state.mode = 'focus';
     state.remainingSeconds = state.focusDuration * 60;
