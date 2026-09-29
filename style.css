@@ -157,6 +157,53 @@ button:active {
   border: 1px solid rgba(17, 24, 39, 0.12);
 }
 
+body.break-mode {
+  background: #111827;
+  color: #fff;
+}
+
+.break-mode .app {
+  width: min(100%, 720px);
+}
+
+.break-mode .timer-card {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.break-mode .eyebrow,
+.break-mode .settings,
+.break-mode .sound-controls {
+  display: none;
+}
+
+.break-mode h1 {
+  color: #fff;
+  text-align: center;
+}
+
+.break-mode .time-display {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.break-mode .controls {
+  justify-content: center;
+}
+
+.break-mode .controls button:not(#stopSoundButton) {
+  display: none;
+}
+
+.break-mode .controls #stopSoundButton {
+  background: var(--soft);
+  color: var(--text);
+}
+
 @media (max-width: 540px) {
   .app {
     padding: 16px;

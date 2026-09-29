@@ -34,6 +34,7 @@ function formatTime(totalSeconds) {
 
 function updateDisplay() {
   timeDisplay.textContent = formatTime(state.remainingSeconds);
+  document.body.classList.toggle('break-mode', state.mode === 'break');
 
   if (state.mode === 'focus') {
     modeLabel.textContent = 'Focus Session';
@@ -111,13 +112,13 @@ async function playBell(generation) {
       oscillator.frequency.value = frequency;
       volume.gain.setValueAtTime(0.0001, startTime);
       volume.gain.exponentialRampToValueAtTime(peak, startTime + 0.02);
-      volume.gain.exponentialRampToValueAtTime(0.0001, startTime + 1.1);
+      volume.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.65);
       oscillator.connect(volume);
       volume.connect(audioContext.destination);
       bellOscillators.add(oscillator);
       oscillator.addEventListener('ended', () => bellOscillators.delete(oscillator), { once: true });
       oscillator.start(startTime);
-      oscillator.stop(startTime + 1.15);
+      oscillator.stop(startTime + 0.7);
     });
   } catch (error) {
     console.warn('Could not play the break bell', error);
@@ -134,7 +135,7 @@ function startBell() {
     if (bellActive) {
       playBell(generation);
     }
-  }, 1600);
+  }, 750);
 }
 
 function stopBell() {
@@ -251,6 +252,9 @@ testSoundButton.addEventListener('click', startBell);
 stopSoundButton.addEventListener('click', stopBell);
 skipButton.addEventListener('click', () => {
   setMode(state.mode === 'focus' ? 'break' : 'focus');
+  if (state.mode === 'break') {
+    startTimer();
+  }
 });
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') {
