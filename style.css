@@ -195,13 +195,19 @@ body.break-mode {
   justify-content: center;
 }
 
-.break-mode .controls button:not(#stopSoundButton) {
+.break-mode .controls button:not(#stopSoundButton):not(#endBreakButton) {
   display: none;
 }
 
-.break-mode .controls #stopSoundButton {
+.break-mode .controls #stopSoundButton,
+.break-mode .controls #endBreakButton {
   background: var(--soft);
   color: var(--text);
+}
+
+.break-mode .controls #endBreakButton {
+  padding: 9px 13px;
+  font-size: 0.88rem;
 }
 
 @media (max-width: 540px) {

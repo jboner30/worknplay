@@ -14,6 +14,7 @@ const modeLabel = document.getElementById('modeLabel');
 const startPauseButton = document.getElementById('startPauseButton');
 const resetButton = document.getElementById('resetButton');
 const skipButton = document.getElementById('skipButton');
+const endBreakButton = document.getElementById('endBreakButton');
 const focusMinutesInput = document.getElementById('focusMinutes');
 const breakMinutesInput = document.getElementById('breakMinutes');
 const testSoundButton = document.getElementById('testSoundButton');
@@ -35,6 +36,7 @@ function formatTime(totalSeconds) {
 function updateDisplay() {
   timeDisplay.textContent = formatTime(state.remainingSeconds);
   document.body.classList.toggle('break-mode', state.mode === 'break');
+  endBreakButton.hidden = state.mode !== 'break';
 
   if (state.mode === 'focus') {
     modeLabel.textContent = 'Focus Session';
@@ -255,6 +257,10 @@ skipButton.addEventListener('click', () => {
   if (state.mode === 'break') {
     startTimer();
   }
+});
+endBreakButton.addEventListener('click', () => {
+  stopBell();
+  setMode('focus');
 });
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') {
